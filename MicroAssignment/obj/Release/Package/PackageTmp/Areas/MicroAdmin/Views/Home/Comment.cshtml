@@ -1,0 +1,94 @@
+﻿@model PagedList.IPagedList<MicroAssignment.Models.Comment>
+
+@{
+    ViewBag.Title = "Comment";
+}
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><i class="icon-user icon-large"></i>&nbsp;  Content Management - Comment</strong>
+    </div> 
+
+<div style="margin-bottom:7px">
+    @using (Html.BeginForm())
+    {
+        <div style="margin-bottom:5px">
+            Search Log: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {@class="search-query", @placeholder="Search"}) 
+            <input class = "btn" type="submit" value="Search" />
+        </div>
+        <strong>Search student by: Comment</strong>
+    }
+</div> 
+<hr />
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            PostId
+        </th>
+        <th>
+            Content
+        </th>
+        <th>
+            CommentDate
+        </th>
+        <th>
+            UserId
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CommentDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "DeleteComment", new { id=item.CommentId })
+        </td>
+    </tr>
+}
+
+</table>
+<p style="text-align:right; margin-top:10px">
+        <ul class="pager">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of   @Model.PageCount
+     
+    @if (Model.HasPreviousPage)
+    {
+        <li>@Ajax.ActionLink("<<  First", "Comment", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+        @Html.Raw(" ");
+        <li>@Ajax.ActionLink("< Prev", "Comment", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+    }
+    else
+    {
+       
+        @Html.Raw(" ");
+        @: <li><span><< Prev</span> </li>
+    }
+      
+    @if (Model.HasNextPage)
+    {
+        
+       <li> @Ajax.ActionLink("Next >", "Comment", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+         @Html.Raw(" ");
+       <li> @Ajax.ActionLink("Last >>", "Comment", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+    }
+    else
+    {
+        @:<li><span>Next >></span> </li>
+        @Html.Raw(" ")
+       
+    }
+            </ul>
+</p>

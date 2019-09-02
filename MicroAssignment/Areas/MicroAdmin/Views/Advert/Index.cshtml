@@ -1,0 +1,85 @@
+﻿@model IEnumerable<MicroAssignment.Models.Advertise>
+
+@{
+    ViewBag.Title = "Index";
+    int sn = 1;
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-hover table-bordered table-striped">
+    <tr>
+        <th>
+            S/N
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyWebsite)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.Visitor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyPhoneNo)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StopDate)
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @(sn++)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyEmail)
+        </td>
+        <td>
+            <a href="http://@item.CompanyWebsite" target="_blank" title="view website">@item.CompanyWebsite</a>
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.Visitor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyPhoneNo)
+        </td>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StopDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsEnabled)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AdvertiseId }) | 
+            @Html.ActionLink("Delete", "Delete", new { id=item.AdvertiseId })
+        </td>
+    </tr>
+}
+
+</table>

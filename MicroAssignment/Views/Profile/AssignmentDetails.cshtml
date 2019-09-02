@@ -1,0 +1,88 @@
+﻿@model MicroAssignment.Models.Assignment
+
+@{
+    ViewBag.Title = "AssignmentDetails";
+}
+
+<div class="row">
+    <div class="col-lg-9">
+         <div class="alert alert-info">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Departmental Assignment / Details</strong>
+                </div>
+<fieldset>
+ 
+    <table class="table table-hover table-bordered table-striped table-condensed">
+        <tr>
+            <td>COURSE NAME:</td>
+            <td>@Html.DisplayFor(model => model.CourseName)</td>
+        </tr>
+        <tr>
+            <td>COURSE CODE:</td>
+            <td>@Html.DisplayFor(model => model.CourseCode)</td>
+        </tr>
+        <tr>
+            <td>TOPIC:</td>
+            <td>@Html.DisplayFor(model => model.Topic)</td>
+        </tr>
+        <tr>
+            <td>LECTUERER:</td>
+            <td>@Html.DisplayFor(model => model.UserProfile.FullName)</td>
+        </tr>
+      
+    </table>
+    <div style="border:solid 1px #e6e0e0;padding:20px">
+        <label>
+         ASSIGNMENT
+    </label>
+        <hr />
+    <div style="padding:20px;line-height:1.3em">
+        @Html.Raw(Model.Content)
+    </div>
+        @if (Model.FilePath != null)
+        {
+            <a href="~/Uploads/Assignments/@(System.IO.Path.GetFileName(Model.FilePath))" title="Download Addignment">Download Attachment File</a>
+        }
+    </div>
+    
+
+</fieldset>
+<hr />
+<p>
+    @Html.ActionLink("<< Back to profile", "Index",null, new { @class = "btn btn-default" }) | 
+    
+        <span>
+            @if (DateTime.Now.Date <= Model.ClosingDate.Value.Date)
+            {
+                @Html.ActionLink("Reply Now!", "../Reply/Create", new { id = Model.AssignmentId, departmentId=Model.DepartmentId, levelId=Model.LevelId, lecturerId=Model.UserId }, new { @class = "btn btn-primary" }) 
+            }
+            else if(User.IsInRole("Pardon"))
+            {
+                @Html.ActionLink("Reply Now!", "../Reply/Create", new { id = Model.AssignmentId, departmentId=Model.DepartmentId, levelId=Model.LevelId, lecturerId=Model.UserId }, new { @class = "btn btn-primary" })
+            }
+            else
+            {
+
+           
+                <div class="alert alert-danger">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Sorry! &nbsp;The submition date for this assignment expired on @Model.ClosingDate.ToString().Substring(0,10) </strong>
+                </div>
+            
+            }
+        </span>
+ 
+    
+</p>
+
+ </div>      
+
+ <div class="col-lg-3">
+        <div class="alert alert-warning">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Advertisement </strong>
+                </div>
+               @Html.Action("_AdvertList")
+    </div>    
+    
+</div>

@@ -1,0 +1,115 @@
+﻿@model IEnumerable<MicroAssignment.Models.EnrolledCourse>
+@{
+    ViewBag.Title = "CourseRegistration";
+
+    int sn = 1;
+}
+
+<div id="test" style="width:95%;padding:5px;border:solid 1px #ada4a4;margin-left:auto;margin-right:auto;margin-top:5px;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px">
+  
+     <table class="table table-striped table-bordered table-hover" style="width:98%;margin-left:auto;margin-right:auto;margin-bottom:10px;margin-top:10px">
+        <tr>
+            <td style="width:15%"><img style="height:100px;" src="~/Images/plogo.png" /></td>
+            <td style="width:70%;color:#9a341b;text-align:center;line-height:12px;font-weight:bold"><h3 style="font-size:2em;font-weight:bold;font-family:'Arial Rounded MT Bold'">COURSE REGISTRATION FORM</h3>
+                <br />( @ViewBag.dept DEPARTMENT)
+            </td>
+            <td style="width:15%"><img src="/Uploads/Items/@(System.IO.Path.GetFileName(@ViewBag.imageUrl))" alt="image" style='height:100px'/></td>
+        </tr>
+    </table>
+    <hr />
+@if (ViewBag.submit == null || ViewBag.submit==false)
+{
+<table class="table table-striped table-bordered table-hover"  style="width:95%;margin-left:auto;margin-right:auto">
+    <tr >
+        <th style="font-weight:bold;font-size:14px;text-decoration:underline">S/N</th>
+       <th style="font-weight:bold;font-size:14px;text-decoration:underline">
+        Course
+       </th>
+       <th style="font-weight:bold;font-size:14px;text-decoration:underline">
+        Course Code
+       </th>
+       <th style="font-weight:bold;font-size:14px;text-decoration:underline">
+        Credit Unit
+       </th>
+        <th style="font-weight:bold;font-size:14px;text-decoration:underline">
+        Status
+       </th>
+        <th></th>
+    </tr>
+   @foreach (var item in Model.OrderBy(y=>y.Course.CourseName))
+{
+    <tr>
+        <td>
+            @(sn++)
+        </td>
+        <td>
+             @Html.DisplayFor(modelItem => item.Course.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.CourseCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.CreditUnit)
+        </td>
+       
+            @if (item.IsCarryover == true)
+            {
+                <td style="color:#f00;font-weight:bold;text-align:center">
+                    CarryOver Course
+                </td> 
+            }
+            else
+            {
+                <td style="color:#339d23;font-weight:bold;text-align:center">
+                    Main course
+                </td> 
+            }
+       
+        <td>
+            @Html.ActionLink("Delete", "../Profile/DeleteNormalCourse", new { id = item.EnrolledCourseId, enrollmentId=item.EnrollmentId })
+        </td>
+    </tr>
+}
+</table>
+    <div style="padding:20px;margin:10px">
+        @Html.Action("_CarryOverList")
+    </div>
+
+   <div style="clear:both;height:10px"></div>  
+     <table>
+        <tr>
+            <td><h3>Total: Unit = @(ViewBag.TotalUnit)</h3> </td>
+        </tr>
+    </table> 
+    
+<div>  
+    
+    <table style="width:96%">
+        <tr>
+            <td>@Html.ActionLink("Add/Delete Carry Over Courses", "../Profile/AddCarryOver", new { id = ViewBag.enrollmentId,deptId=ViewBag.deptId, dept=ViewBag.dept }, new { @class="btn btn-info"})</td>
+            
+            <td style="text-align:right">
+                @using (Html.BeginForm("SubmitCourse", "Profile", new { id = ViewBag.enrollmentId, deptId = ViewBag.deptId, dept = ViewBag.dept }))
+                {
+                       <input type="submit" value="Submit/Copy To Course Adviser" class="btn btn-primary" />
+              
+                }
+            </td>
+        </tr>
+    </table>
+   
+</div>
+
+
+<div style="clear:both;height:10px"></div>
+<hr />
+
+    
+}
+
+    <p style="padding:3px;margin:20px; text-align:center; background-color:#339540;font-family:' Country ';font-size:xx-large;font-weight:bold;  color:#fff">*--- APPROVED ---*</p>
+    <div style="width:40%;line-height:2em;  margin-left:auto;margin-right:auto;margin-bottom:20px;margin-top:20px;padding:30px;color:#c7c4c4;font-family:' Country ';font-size:22px;text-align:center">
+       @Html.ActionLink("<<< Preview >>>", "../Profile/CoursePreview", null, new { id = ViewBag.enrollmentId, dept = ViewBag.dept,deptId = ViewBag.deptId }, new { @class = "art-button" })</div>
+
+         <a href="~/Profile/Index" class="btn btn-small btn-primary">Finish</a>       
+    </div>

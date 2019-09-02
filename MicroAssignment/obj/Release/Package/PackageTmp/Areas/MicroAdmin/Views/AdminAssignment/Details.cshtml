@@ -1,0 +1,78 @@
+﻿@model MicroAssignment.Models.Assignment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Assignment</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CourseName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CourseName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CourseCode)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CourseCode)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Topic)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Topic)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Content)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Content)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Department.DepartmentName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Department.DepartmentName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Levels.LevelName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Levels.LevelName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserProfile.UserName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserProfile.UserName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Date)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Date)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClosingDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClosingDate)
+    </div>
+</fieldset>
+<p>
+
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,50 @@
+﻿@model MicroAssignment.Models.ReplyAssignment
+
+@{
+    ViewBag.Title = "Replied Assignment";
+}
+
+<h2>Assignment Details</h2>
+
+<fieldset>
+    <legend>Replied Assignment</legend>
+
+ <p style="color:#f00">@TempData["Error"]</p>
+    <div style="padding:20px;border:solid 1px #f3e7e7">
+        
+            <label>ASSIGNMENT</label>
+        <hr />
+
+        @Html.Raw(Model.Content)
+
+         @if (Model.FilePath != null)
+        {
+            <a href="~/Uploads/SumittedAssignments/@(System.IO.Path.GetFileName(Model.FilePath))" title="Download Addignment">Download Attachment File</a>
+    
+         }
+    </div>
+  
+    
+    
+</fieldset>
+<div style="margin:10px;padding:10px">
+
+    @using (Html.BeginForm("UpdateScore", "Reply", new { id = Model.ReplyAssignmentId, assignmentId=Model.AssignmentId }))
+    {
+        <p style="color:#f00">@TempData["error"]</p>
+        <label>Add Score</label>
+        
+        <div class="input-group" style="width:190px">
+          <span class="input-group-addon">Score</span>
+          <input type="text" name="Score" value="@Model.Score" class="form-control" aria-label="Amount (to the nearest dollar)" required >
+          <span class="input-group-addon">.00 / 40</span>
+        </div>
+        
+        @*<input type="text" name="Score" value="@Model.Score" class="form-control" style="width:130px" placeholder="00" required="required"/>*@
+        <input type="submit" class="btn btn-danger" value="Add Score" style="margin-top:7px" />
+    }
+
+</div>
+<p>
+    @Html.ActionLink("<< Back to list", "Index", "Reply",new{id=ViewBag.AssignmentId }, new { @class = "btn btn-default" })
+</p>

@@ -1,0 +1,87 @@
+﻿@model MicroAssignment.Models.Tutorial
+
+@{
+    ViewBag.Title = "Details";
+    var db = new MicroAssignment.Models.MicroContext();
+    var userdetails = db.UserProfiles.FirstOrDefault(x => x.UserId == Model.UserId);
+}
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><i class="icon-user icon-large"></i>&nbsp;  Settings - Tutorials </strong>
+    </div> 
+
+
+<div class="row">
+    <!-- Blog Post Content Column -->
+            <div class="col-lg-12">
+                 <p>
+                    @Html.ActionLink("Back to list", "Index", new { id = ViewBag.Id })
+                </p>
+                <!-- Blog Post -->
+
+                <hr>
+
+                <!-- Date/Time -->
+                <p><i class="fa fa-clock-o"></i> Posted on @Html.DisplayFor(model => model.Date)</p>
+
+                <hr>
+
+                <!-- Preview Image -->
+                 @if (userdetails.ImageUrl == null || userdetails.ImageUrl == "")
+                    {
+                        <img src="~/Images/no-avatar.jpg" style="width:100px;height:100px" />
+                    }else{
+                   <img src="~/Uploads/Items/@System.IO.Path.GetFileName(userdetails.ImageUrl)" style="width:100px;height:100px" />
+                    }
+
+                <hr>
+
+                <!-- Post Content -->
+                <p class="lead">
+                    @Html.DisplayFor(model => model.Topic)
+                    <pre style="height:600px;scrollbar-3dlight-color:ActiveBorder;">
+                        <code>
+                            @Html.Raw(Model.Content)
+                        </code>
+                    </pre>
+                    
+
+                </p>
+                <hr>
+
+                <!-- Blog Comments -->
+
+@*                <!-- Comments Form -->
+                <div class="well">
+                    <h4>Leave a Comment:</h4>
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+                <hr>
+
+                <!-- Posted Comments -->
+
+                <!-- Comment -->
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">Start Bootstrap
+                            <small>August 25, 2014 at 9:30 PM</small>
+                        </h4>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                    </div>
+                </div>*@
+                <p>
+                    @Html.ActionLink("Back to list", "Index", new { id = ViewBag.Id })
+                </p>
+                </div>
+</div>
+

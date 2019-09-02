@@ -1,0 +1,133 @@
+@model MicroAssignment.Models.InstructorModel
+@using CaptchaMvc.HtmlHelpers
+@{
+    ViewBag.Title = "Account";
+    var captcha = Html.Captcha("Refresh", "Type the text you see above:", 5, "Is required field.", false);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span style="text-align:right;float:right;margin-right:10px">@Html.ActionLink("Forget Password","ResetPassword","Account")</span>
+
+ <div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+        @using (Html.BeginForm("Instructor", "Account", FormMethod.Post, new { enctype = "multipart/form-data", @role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <span style="color:#f00">@Html.ValidationSummary()</span>
+			<h2>Please Sign Up <small>It's free and always will be.</small></h2>
+			<hr class="colorgraph">
+			<div class="row">
+               
+				<div class="col-xs-12 col-sm-6 col-md-6">
+                     <div class="form-group">
+                         @Html.LabelFor(m=>m.UserName)
+                        @Html.TextBoxFor(m => m.UserName, new {id="first_name", @class="form-control input-lg",@placeholder="Username",@tabindex="1"})
+			        </div>
+				<div class="form-group">
+                    @Html.LabelFor(m=>m.SurName,"Surname")
+                        @Html.TextBoxFor(m => m.SurName, new {id="first_name", @class="form-control input-lg",@placeholder="Surname",@tabindex="3"})
+				</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-6 col-md-6">
+					<div class="form-group">
+                        @Html.LabelFor(m=>m.FirstName)
+						@Html.TextBoxFor(m => m.FirstName, new {id="first_name", @class="form-control input-lg",@placeholder="First Name",@tabindex="2"})
+					</div>
+                    <div class="form-group">
+                        @Html.LabelFor(m=>m.OtherNames)
+                        @Html.TextBoxFor(m => m.OtherNames, new {id="first_name", @class="form-control input-lg",@placeholder="Other Names",@tabindex="4"})
+			        </div>
+				</div>
+
+			</div>
+            <div class="form-group">
+                 @Html.LabelFor(m => m.Department.DepartmentName,"Department")
+                 @Html.DropDownList("DepartmentId", ViewBag.DepartmentId as SelectList, "Select Department", new { id="", @required=true, @class = "form-control input-lg",@tabindex="5"}) 
+			</div> 
+          <div class="form-group">
+                @Html.LabelFor(m=>m.PhoneNumber)
+                @Html.TextBoxFor(m => m.PhoneNumber, new {id="phone_no",@type="text", @class="form-control input-lg",@placeholder="Phone No",@tabindex="6"})
+			</div> 
+			<div class="form-group">
+                @Html.LabelFor(m=>m.EmailAddress)
+                @Html.TextBoxFor(m => m.EmailAddress, new {id="email", @class="form-control input-lg",@placeholder="Email Address",@tabindex="7",@required="required",@type="email"})
+			</div>
+           
+            <div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-6">
+					<div class="form-group">
+                        @Html.LabelFor(m=>m.Password)
+                         @Html.TextBoxFor(m => m.Password, new {id="password",@type="password", @class="form-control input-lg",@placeholder="Password",@tabindex="8"})
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-6">
+					<div class="form-group">
+                        @Html.LabelFor(m=>m.ConfirmPassword)
+                         @Html.TextBoxFor(m => m.ConfirmPassword, new {id="password",@type="password", @class="form-control input-lg",@placeholder="Confirm Password",@tabindex="9"})
+					</div>
+				</div>
+			</div>
+            
+            
+			<div class="form-group">
+                <span style="color:#f00;margin:10px">Prove that you are not a robot by typing this code</span>
+                    <div>
+                      @captcha
+                        <span style="color:#f00"> @Html.ValidationMessage(captcha.BuildInfo.InputElementId)</span>
+                    </div>
+            </div>
+            
+            <div class="row">
+				<div class="col-xs-4 col-sm-3 col-md-3">
+					<span class="button-checkbox">
+						<button type="button" class="btn" data-color="info" tabindex="22">I Agree</button>
+                        <input type="checkbox" name="t_and_c" id="t_and_c" class="hidden" value="1">
+					</span>
+				</div>
+				<div class="col-xs-8 col-sm-9 col-md-9">
+					 By clicking <strong class="label label-primary">Register</strong>, you agree to the <a href="#" data-toggle="modal" data-target="#t_and_c_m">Terms and Conditions</a> set out by this site, including our Cookie Use.
+				</div>
+			</div>
+			<hr class="colorgraph">
+			<div class="row">
+				<div class="col-xs-12 col-md-6"><input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="9"></div>
+				
+			</div>
+        }
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="t_and_c_m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Terms & Conditions</h4>
+			</div>
+			<div class="modal-body">
+				<p><strong>Welcome to</strong> assignmentng.com</p>
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">I Agree</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+
+
+
+
+
+

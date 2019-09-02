@@ -1,0 +1,22 @@
+﻿@model MicroAssignment.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Category</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CategoryName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CategoryName)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.CategoryId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

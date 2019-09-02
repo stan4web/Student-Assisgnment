@@ -1,0 +1,50 @@
+﻿@model MicroAssignment.Models.Course
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Course</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CourseName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CourseName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Department.DepartmentName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Department.DepartmentName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CreditUnit)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreditUnit)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CourseCode)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CourseCode)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Session.SessionYear)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Session.SessionYear)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.CourseID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

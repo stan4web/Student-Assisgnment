@@ -1,0 +1,67 @@
+﻿@model MicroAssignment.Models.Material
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Material</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CategoryName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CategoryName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Department.DepartmentName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Department.DepartmentName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Topic)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Topic)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DocumentUrl)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DocumentUrl)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DateUploaded)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateUploaded)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserProfile.UserName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserProfile.UserName)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

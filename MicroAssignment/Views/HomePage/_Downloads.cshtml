@@ -1,0 +1,18 @@
+
+<div>
+    
+    @foreach (var item in ViewBag.Download)
+    {
+        <div class="col-lg-3 col-sm-12">
+           <hr class="section-heading-spacer">
+                <div class="clearfix"></div>
+                <div class="thumbnail">
+                    <h6 style="text-align:center">@item.Topic</h6>
+                <img src="~/Images/pdf-icon1.png" style="width:50%;margin-top:10px" alt="...">
+                @Html.ActionLink("Read More...", "Details","Project", new { id = item.MaterialId, topic = item.Topic }, new { @class = "btn btn-primary col-xs-12", @role = "button" })
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    }
+</div>
+

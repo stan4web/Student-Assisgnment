@@ -1,0 +1,36 @@
+﻿@model MicroAssignment.Models.Session
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Session</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.SessionYear)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SessionYear)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Semester)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Semester)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FullSession)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FullSession)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.SessionId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,164 @@
+﻿@model PagedList.IPagedList<MicroAssignment.Models.Post>
+
+@{
+    ViewBag.Title = "Forum";
+     var db = new MicroAssignment.Models.MicroContext();
+     var userDetails =db.UserProfiles.FirstOrDefault(x=>x.UserName==User.Identity.Name);
+
+     int comId = 1;
+}
+
+<!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+
+            <div class="col-lg-9">
+                
+                <div class="alert alert-info">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Forum</strong>
+                </div>
+
+        
+                <h3>
+                    <a>General Forum</a>
+                </h3>
+                <div style="margin-bottom:7px">
+                            @using (Html.BeginForm())
+                            {
+                               <div >@Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {@class = "form-control",@placeholder="Search Post",@style="float:left;margin-right:2px;width:300px"}) 
+                               <input class = "btn btn-default" type="submit" value="Search>>" /></div>
+                              
+                            }
+                        </div>
+<hr />
+               @foreach (var item in Model.OrderByDescending(x=>x.PostId))
+               {
+                   
+                   var comment = db.Comments.Where(p => p.PostId == item.PostId).ToArray();
+                    <div class="media" style="border:solid 1px #ede7e7;padding:20px;text-align:justify">
+                        <strong style="color:#0094ff;text-decoration:underline;font-style:italic;margin-bottom:10px;width:100%; clear:both">Thread By:</strong>
+                        <div >
+                            <a class="pull-left" href="#">
+                                @if (item.UserProfile.ImageUrl == null)
+                                {
+                                    <img src="~/Images/no-avatar.jpg" class="img-circle" style="width:50px;height:50px;border:solid 1px #808080;padding:3px;display:block;margin-right:5px;margin-bottom:5px" />
+                                }else{
+                                <img class="img-circle" data-src="holder.js/64x64" alt="" src="~/Uploads/Items/@System.IO.Path.GetFileName(item.UserProfile.ImageUrl)" style="width:44px;height:44px;border:solid 1px #808080;padding:3px;display:block;margin-right:5px;margin-bottom:5px" />
+                                }
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading">@item.UserProfile.FullName  | 
+                                    <small>@item.PostDate</small>
+                                    </h4>
+                                    @item.PostContent
+                                </div>
+                        </div>
+                        <hr />
+                        
+                        
+
+                        
+                        <a onclick ="javascript:ShowHide('@item.PostId')" href="javascript:;" style="font-style:italic" >@item.Comments.Count() Comment's </a>
+                        <div class="mid" id="@item.PostId" style="DISPLAY: none" >
+                        <!--Comment List-->
+                        <div style="text-align:left">
+                            @foreach (var comm in comment.OrderByDescending(x=>x.CommentId))
+                            {
+                                {
+                                    var info = db.UserProfiles.FirstOrDefault(x => x.UserId == comm.UserId);
+                                
+                                <div class="media">
+                                  <a class="pull-left" href="#">
+                                      @if(info.ImageUrl!=null){
+                                    <img class="img-circle" data-src="holder.js/64x64" alt="" src="~/Uploads/Items/@System.IO.Path.GetFileName(info.ImageUrl)" style="width:30px;height:30px;border:solid 1px #808080;padding:3px;display:block;margin-left:30px" />
+                                      }else{
+                                          <img class="img-circle" data-src="holder.js/64x64" alt="" src="~/Images/no-avatar.jpg" style="width:30px;height:30px;border:solid 1px #808080;padding:3px;display:block;margin-left:30px" />
+                                      }
+                                          </a>
+                                    <div class="media-body">
+                                        
+                                        <h6 style="color:#811616" class="media-heading">@info.FullName Say:</h6>
+                                                @comm.Content<br />
+                                        <small>@comm.CommentDate</small>
+                                    </div>
+                              </div>
+                                <hr />
+                            }
+                          }
+                        </div>
+                        <!--Comment Post-->
+
+                        <div style="margin-top:20px">
+                            @using (Html.BeginForm("PostComment", "Profile", new { id = item.PostId }))
+                            {
+                                @Html.TextArea("Content", new {@placeholder="Comment here..",@class="form-control",@style="width:50%;margin-bottom:5px; height:50px",@required=true })
+                                <button class="btn-primary btn-xs">Comment</button>
+                            }
+                        </div>
+
+                        </div>
+                        <script language="JavaScript">
+                            function ShowHide(divId) {
+                                if (document.getElementById(divId).style.display == 'none') {
+                                    document.getElementById(divId).style.display = 'block';
+                                }
+                                else {
+                                    document.getElementById(divId).style.display = 'none';
+                                }
+                            }
+                        </script>
+
+                  </div>
+                   <hr />
+               }
+               
+                <div>
+                    <p style="text-align:right; margin-top:10px">
+                            <ul class="pager">
+                                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                of   @Model.PageCount
+     
+                                @if (Model.HasPreviousPage)
+                                {
+                                    <li>@Ajax.ActionLink("<<  First", "Forum", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+                                    @Html.Raw(" ");
+                                    <li>@Ajax.ActionLink("< Prev", "Forum", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+                                }
+                                else
+                                {
+       
+                                    @Html.Raw(" ");
+                                    @: <li><span><< Prev</span> </li>
+                                }
+      
+                                @if (Model.HasNextPage)
+                                {
+        
+                                   <li> @Ajax.ActionLink("Next >", "Forum", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+                                     @Html.Raw(" ");
+                                   <li> @Ajax.ActionLink("Last >>", "Forum", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+                                }
+                                else
+                                {
+                                    @:<li><span>Next >></span> </li>
+                                    @Html.Raw(" ")
+       
+                                }
+                            </ul>
+                    </p>
+                </div>
+
+ 
+            </div>
+
+
+
+      <div class="col-lg-3">
+               <div class="alert alert-warning">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Advertisement </strong>
+                </div>
+               @Html.Action("_AdvertList")
+            </div>
+            </div>
+

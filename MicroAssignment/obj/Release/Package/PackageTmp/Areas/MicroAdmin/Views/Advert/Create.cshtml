@@ -1,0 +1,109 @@
+﻿@model MicroAssignment.Models.Advertise
+
+@{
+    ViewBag.Title = "Create";
+}
+  <div class="row">
+            <div class="col-lg-6">
+               
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Advert", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>Advertise</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CompanyName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control",@required=true,@placeholder="example: Company Name" })
+            @Html.ValidationMessageFor(model => model.CompanyName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CompanyEmail)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CompanyEmail, new { @class = "form-control",@required=true,@placeholder="example: info@companyname.com" })
+            @Html.ValidationMessageFor(model => model.CompanyEmail)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CompanyWebsite)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CompanyWebsite, new { @class = "form-control",@required=true,@placeholder="example: www.companywebsite.com"})
+            @Html.ValidationMessageFor(model => model.CompanyWebsite)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control" ,@required=true,@placeholder="Content"})
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+      
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CompanyPhoneNo)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CompanyPhoneNo, new { @class = "form-control",@required=true })
+            @Html.ValidationMessageFor(model => model.CompanyPhoneNo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ImageUrl)
+        </div>
+        <div class="editor-field">
+            <input type="file" name="fileuploader1" />
+            @Html.ValidationMessageFor(model => model.ImageUrl)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StartDate)
+        </div>
+        <div class="editor-field">
+            <input  type="text" required="required" class="form-control" placeholder="@DateTime.Now.Month/@DateTime.Now.Day/@DateTime.Now.Year" id="dp2" name="StartDate" style="width:300px;margin-bottom:7px" >
+        
+            @Html.ValidationMessageFor(model => model.StartDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StopDate)
+        </div>
+        <div class="editor-field">
+            <input  type="text" required="required" class="form-control" placeholder="@DateTime.Now.Month/@DateTime.Now.Day/@DateTime.Now.Year" id="dp3" name="StopDate" style="width:300px;margin-bottom:7px" >
+        
+            @Html.ValidationMessageFor(model => model.StopDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsEnabled)
+        </div>
+        <div class="editor-field">
+            @Html.CheckBoxFor(model => model.IsEnabled)
+            @Html.ValidationMessageFor(model => model.IsEnabled)
+        </div>
+
+        <p>
+            <input type="submit" value="Create Advert" class="btn btn-primary" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+                </div>
+      </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

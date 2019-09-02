@@ -1,0 +1,91 @@
+﻿@model MicroAssignment.Models.ReplyAssignment
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ReplyAssignment</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AssignmentId, "Assignment")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("AssignmentId", String.Empty)
+            @Html.ValidationMessageFor(model => model.AssignmentId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Content)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Content)
+            @Html.ValidationMessageFor(model => model.Content)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DepartmentId, "Department")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("DepartmentId", String.Empty)
+            @Html.ValidationMessageFor(model => model.DepartmentId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LevelId, "Levels")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("LevelId", String.Empty)
+            @Html.ValidationMessageFor(model => model.LevelId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserId, "UserProfile")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("UserId", String.Empty)
+            @Html.ValidationMessageFor(model => model.UserId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Date)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Date)
+            @Html.ValidationMessageFor(model => model.Date)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StudentId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.StudentId)
+            @Html.ValidationMessageFor(model => model.StudentId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Score)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Score)
+            @Html.ValidationMessageFor(model => model.Score)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,152 @@
+﻿@model MicroAssignment.Models.Assignment
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+ <!-- Page Heading/Breadcrumbs -->
+<div class="row">
+    <div class="col-lg-9">
+         <div class="alert alert-info">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Departmental Assignment Create</strong>
+                </div>
+
+<p style="color:#f00">@TempData["Error"]</p>
+@using (Html.BeginForm("Create", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Assignment</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CourseName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CourseName, new { @class = "form-control", @placeholder = "Course name", @style = "width:300px;margin-bottom:7px" })
+            @Html.ValidationMessageFor(model => model.CourseName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CourseCode)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CourseCode, new { @class = "form-control", @placeholder = "Course code", @style = "width:300px;margin-bottom:7px" })
+            @Html.ValidationMessageFor(model => model.CourseCode)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Topic)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Topic, new { @class = "form-control", @placeholder = "Topic", @style = "width:300px;margin-bottom:7px" })
+            @Html.ValidationMessageFor(model => model.Topic)
+        </div>
+        <div>
+            <label>Expiring Date</label>
+        </div>
+        <input  type="text" required="required" class="form-control" placeholder="@DateTime.Now.Month/@DateTime.Now.Day/@DateTime.Now.Year" id="dp2" name="ClosingDate" style="width:300px;margin-bottom:7px" >
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Content)
+        </div>
+        <div class="editor-field">
+            
+            @Html.TextAreaFor(c => c.Content, new { @id = "summernote" })
+            @Html.ValidationMessageFor(model => model.Content)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FilePath) <span style="color:#808080;font-size:small">( Optional )</span>
+        </div>
+        <div class="editor-field">
+            
+            <span class="form-control" style="width:300px;margin-bottom:7px" >
+                <input type="file" id="fileToUpload" name="file" />
+            </span>
+            @Html.ValidationMessageFor(model => model.FilePath)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SchoolId, "School")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("SchoolId", ViewBag.SchoolId as SelectList, "Select School", new { id = "schooldata", @required = true, @class = "form-control", @style = "width:300px" })
+            @Html.ValidationMessageFor(model => model.SchoolId)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DepartmentId, "Department")
+        </div>
+        <div class="editor-field">
+            <select id="DepartmentId" name="DepartmentId" class = "form-control" required="required" style="width:300px;"></select>
+            @Html.ValidationMessageFor(model => model.DepartmentId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LevelId, "Levels")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("LevelId", ViewBag.LevelId as SelectList, "Select Level", new { id = "LevelId", @required = true, @class = "form-control", @style = "width:200px" })
+            @Html.ValidationMessageFor(model => model.LevelId)
+        </div>
+         
+        <p style="margin-top:7px">
+            <input type="submit" value="Publish" class="btn btn-primary" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to ControlPanel", "Index","Profile")
+</div>
+
+</div>
+
+     <div class="col-lg-3">
+        <div class="alert alert-warning">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Advertisement </strong>
+                </div>
+               @Html.Action("_AdvertList","Profile")
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+@section Scripts {
+  
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/summernote/summernote.css" rel="stylesheet" />
+    <script src="~/Content/summernote/summernote.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                height: 300,
+                width:800,
+            });
+        });
+    </script>
+    <script type="text/jscript">
+        $(function () {
+            $('#schooldata').change(function () {
+                $.getJSON('/Assignment/DeptList/' + $('#schooldata').val(), function (data) {
+                    var items = '<option style="background-image:url()">Select Department</option>';
+                    $.each(data, function (i, local) {
+                        items += "<option value='" + local.Value + "'>" + local.Text + "</option>";
+                    });
+                    $('#DepartmentId').html(items);
+                });
+            });
+        });
+</script>
+}
+

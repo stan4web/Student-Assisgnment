@@ -1,0 +1,92 @@
+﻿@model MicroAssignment.Models.UserProfile
+
+@{
+    ViewBag.Title = "ComplateRegistration";
+}
+
+<p style="font-size:18px">
+    <strong style="color:#17ac2a">Congratulation! </strong> Your registration was successfull and your Username is <strong style="color:#0094ff">@Model.UserName</strong>
+</p>
+<hr />
+<h4>Complate Registration Proccess</h4>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>User Profile</legend>
+
+        @Html.HiddenFor(model => model.UserId)
+        @Html.HiddenFor(model => model.UserName)
+        @Html.HiddenFor(model => model.EmailAddress)
+        @Html.HiddenFor(model => model.PhoneNumber)
+        @Html.HiddenFor(model => model.SchoolId)
+        @Html.HiddenFor(model => model.ImageUrl)
+        @Html.HiddenFor(model => model.RegistrationType)
+     
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SurName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.SurName, new {@required=true, @class = "form-control",@style="width:300px"})
+            @Html.ValidationMessageFor(model => model.SurName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.FirstName, new {@required=true, @class = "form-control",@style="width:300px"})
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OtherNames)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.OtherNames, new {@class = "form-control",@style="width:300px"})
+            @Html.ValidationMessageFor(model => model.OtherNames)
+        </div>
+
+      
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RegistrationNumber,"Reg. Number")
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.RegistrationNumber, new {@required=true, @class = "form-control",@style="width:300px"})
+            @Html.ValidationMessageFor(model => model.RegistrationNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DepartmentId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("DepartmentId", ViewBag.DepartmentId as SelectList, "Select Department", new {@required=true, @class = "form-control",@style="width:300px"}) 
+           
+            @Html.ValidationMessageFor(model => model.DepartmentId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LevelId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("LevelId", ViewBag.LevelId as SelectList, "Select Level", new {@required=true, @class = "form-control",@style="width:300px"})
+            @Html.ValidationMessageFor(model => model.LevelId)
+        </div>
+
+
+        <p style="margin-top:10px">
+            <input type="submit" value="Save/Continue" class="btn btn-success btn-lg"/>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

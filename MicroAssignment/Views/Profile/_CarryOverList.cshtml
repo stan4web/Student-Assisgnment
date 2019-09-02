@@ -1,0 +1,45 @@
+﻿
+@if(ViewBag.Empty ==null){
+<div>
+<strong>Carry Over Courses</strong>
+@{int sn = 1;}
+@ViewBag.dept
+<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+    <tr>
+        <th>S/N</th>
+        <th>Coursr Name</th>
+        <th>Code</th>
+        <th>Unit</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+    @foreach (var item in ViewBag.carryover)
+    {
+        <tr>
+            <td>@(sn++)</td>
+            <td>@item.Course.CourseName</td>
+            <td>@item.Course.CourseCode</td>
+            <td>@item.Course.CreditUnit</td>
+            @if (item.IsCarryover == true)
+            {
+                <td style="color:#f00;font-weight:bold;text-align:center">
+                    CarryOver Course
+                </td> 
+            }
+            else
+            {
+                <td style="color:#339d23;font-weight:bold;text-align:center">
+                    Main course
+                </td> 
+            }
+            <td>
+                @Html.ActionLink("Delete", "../Profile/DeleteCarryOver",new { id = item.CarryOverId, enrollmentId = item.EnrollmentId })
+            </td>
+        </tr>
+    }
+</table>
+<hr />
+<strong>Carry Over Unit: @ViewBag.TotalUnit</strong>
+<br />
+</div>
+}

@@ -1,0 +1,25 @@
+﻿<div>
+    @{
+        int sn = 1;
+    }
+    <table class="table table-hover table-bordered table-striped table-condensed" style="font-size:x-small;font-weight:bold">
+        <tr>
+            <th>S/N</th>
+            <th>Lecturer Name</th>
+            <th>Code</th>
+            <th>Topic</th>
+        </tr>
+   @foreach (var item in ViewBag.SubmitAssignment)
+    {
+       <tr>
+           <td>
+               @(sn++)
+           </td>
+            <td>@item.UserProfile.SurName</td>
+           <td>@item.Assignment.CourseCode</td>
+           <td><a title="View Assignment Details" href="@Url.Content("../Reply/Details/")@item.ReplyAssignmentId">View</a></td>
+          @* <td>@item.Date.ToString().Substring(0,10)</td>*@
+       </tr> 
+    }
+    </table>
+</div>

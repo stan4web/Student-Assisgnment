@@ -1,0 +1,42 @@
+﻿@model MicroAssignment.Models.ReplyAssignment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>ReplyAssignment</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Assignment.CourseName) : <strong>@Html.DisplayFor(model => model.Assignment.CourseName)</strong>
+    </div>
+    <hr />
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Content)
+    </div>
+    <div style="padding:20px;border:solid 1px #f3e7e7">
+        @Html.Raw(Model.Content)
+    </div>
+    <hr />
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Department.DepartmentName) : <strong>@Html.DisplayFor(model => model.Department.DepartmentName)</strong>
+    </div>
+    
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Levels.LevelName) : <strong> @Html.DisplayFor(model => model.Levels.LevelName)</strong>
+    </div>
+   
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserProfile.UserName) : <strong>@Html.DisplayFor(model => model.UserProfile.FullName)</strong>
+    </div>
+   <div class="display-label">
+         Submitted On : <strong>@Html.DisplayFor(model => model.Date)</strong>
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("<< Back to profile", "Index", "Profile", null, new { @class = "btn btn-default" })
+</p>

@@ -1,0 +1,265 @@
+@model PagedList.IPagedList<MicroAssignment.Models.Post>
+
+@{
+    ViewBag.Title = "Index";
+    var db = new MicroAssignment.Models.MicroContext();
+}
+<script src="~/Content/bootstrap/js/jqBootstrapValidation.js"></script>
+   <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-9">
+                
+                <div class="alert alert-info">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i><span style="font-size:1.3em;color:#13691e">Hello! &nbsp; @ViewBag.FullName, Welcome to @ViewBag.Department</span></strong>
+                </div>
+
+                <div style="margin-bottom:7px">
+                            @using (Html.BeginForm())
+                            {
+                               <div >@Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {@class = "form-control",@placeholder="Search Post",@style="float:left;margin-right:2px;width:300px"}) 
+                               <input class = "btn btn-default" type="submit" value="Search>>" /></div>
+                              
+                            }
+                        </div>
+<hr />
+
+                <!-- Comments Form -->
+                <div class="well">
+                    <h5>Post</h5>
+                   <span style="color:#f00">@TempData["validation"]</span>
+                        @using (Html.BeginForm("Post", "Profile", new { id = ViewBag.UserId, DepartmentId=ViewBag.DeparmentId, role = "form" }))
+                        {
+                        <div class="form-group" style="text-align:right">
+                         <textarea class="form-control" rows="3" name="Content" placeholder="say it here.." required style="height:60px;width:100%"></textarea>
+                          <span style="width:auto;float:left;margin-top:3px;margin-right:10px; color:#de7215">Allow students and lecturers in other departments to view and comment on this post</span>
+                            
+                            <select name="IsPublic" class="form-control" style="width:auto;float:left;margin-top:3px">
+                                <option>No</option>
+                                <option>Yes</option>
+                            </select>
+                             @*<input type="submit" value="Share" class="btn btn-primary" style="margin-top:3px" />*@
+                            <button class="btn btn-primary" style="margin-top:3px"><i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i> Share <i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i></button>
+                        </div>
+                        
+                        }
+                 
+                </div>
+
+                <hr>
+
+                <!-- Posted Comments -->
+
+                @foreach (var item in Model.OrderByDescending(x=>x.PostId))
+                {
+                    <div class="well" style="text-align:left">
+                        <button class="btn-primary btn-xs">By: @item.UserProfile.FirstName.Substring(0,1).ToUpper()@item.UserProfile.FirstName.Substring(1).ToLower()</button> | <button class="btn-info btn-xs">Date @Html.DisplayFor(modelItem=>item.PostDate)</button>
+                        <table>
+                            <tr>
+                                <td>
+                                    <img src="~/Uploads/Items/@(System.IO.Path.GetFileName(item.UserProfile.ImageUrl))" class="user-image img-responsive" style="width:40px;margin-right:5px;margin-bottom:5px" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem=>item.PostContent)
+                                </td>
+                            </tr>
+                        </table>
+   <a onclick ="javascript:ShowHide('@item.PostId')" class="" style="font-style:italic" href="javascript:;">Comment's @Html.DisplayFor(modelItem=>item.Comments.Count) </a>          
+                
+                    
+                    <!--comments post-->
+                    <div class="mid" id="@item.PostId" style="DISPLAY: none" >
+
+
+                    <!--comments list-->
+                      <hr />  
+                    <div >
+                        @foreach (var comment in item.Comments)
+                        {
+                            int id = comment.UserId;
+                            var userInfo = db.UserProfiles.FirstOrDefault(x => x.UserId == id);
+                            <div style="background-color:#c1d8e9;margin:10px;padding:7px;border:solid 1px #8db0ca">
+                                <strong>@userInfo.SurName.Substring(0,1).ToUpper()@userInfo.SurName.Substring(1).ToLower() @userInfo.FirstName.Substring(0,1).ToUpper()@userInfo.FirstName.Substring(1).ToLower() Says:</strong>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <img src="~/Uploads/Items/@(System.IO.Path.GetFileName(userInfo.ImageUrl))" class="user-image img-responsive" style="width:30px;margin-right:5px;margin-bottom:5px;clear:both" />
+                                        
+                                        </td>
+                                        <td>
+                                            @comment.Content
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                
+                               
+                                 
+                            </div>
+                        }
+
+                    </div>
+
+
+                        @using (Html.BeginForm("PostComment", "Profile", new { id = item.PostId }))
+                        {
+                            <textarea name="Content" placeholder="Comment here" class="form-control" style="height:60px;width:300px;margin-bottom:3px"></textarea>
+                           
+                            <input type="submit" value="Comment" class="btn btn-primary btn-xs" />
+                        }
+                    </div>
+
+                </div>
+                }
+                 
+                 <p style="text-align:right; margin-top:10px">
+                            <ul class="pager">
+                                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                of   @Model.PageCount
+     
+                                @if (Model.HasPreviousPage)
+                                {
+                                    <li>@Ajax.ActionLink("<<  First", "Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+                                    @Html.Raw(" ");
+                                    <li>@Ajax.ActionLink("< Prev", "Index", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+                                }
+                                else
+                                {
+       
+                                    @Html.Raw(" ");
+                                    @: <li><span><< Prev</span> </li>
+                                }
+      
+                                @if (Model.HasNextPage)
+                                {
+        
+                                   <li> @Ajax.ActionLink("Next >", "Index", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+                                     @Html.Raw(" ");
+                                   <li> @Ajax.ActionLink("Last >>", "Index", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+                                }
+                                else
+                                {
+                                    @:<li><span>Next >></span> </li>
+                                    @Html.Raw(" ")
+       
+                                }
+                            </ul>
+                    </p>   
+            </div>
+
+            <!--New Colum-->
+            <div class="col-lg-3">
+                <div class="alert alert-warning">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Advertisement </strong>
+                </div>
+               @Html.Action("_AdvertList")
+           </div>
+        </div>
+        <!-- /.row -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Hello every one, Welcome to Micro-Assignment Portal</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+As a new user, We know you may somehow find it difficult to use App, but do not panic. Here is the step-by-step tutorial on how to view and submit your assignment to the course lecturer.
+        </p>
+<p>
+<ul>
+<ol>1. Type www.assignmentng.con on the address bar</ol>
+<ol>2. Click on the student link </ol>
+<ol>3.  If you have an account then enter your username and password else you have to create a new student account by filling the form on the registration page.</ol>
+<ol>4.  If login was successful then from the right hand side you will see a panel where all the assignment will be listed from your course lecturers.</ol>
+<ol>5.  Click on the topic to view the assignment.</ol>
+<ol>6. After viewing it click on reply to submit your assignment to your course lecturer. </ol>
+<ol>7.  I hope this simple guide will help you. <strong>Good Luck</strong> </ol>
+</ul>
+</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="t_and_c_m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel" style="font-weight:bold;text-align:center;color:#0a78c7">DISCLAIMER</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+                    The information contained in this website is for academic purposes only. 
+                    The information is provided by <strong>Microware Solution</strong> and while we endeavour to 
+                    keep the information up to date and correct, we make no representations or warranties 
+                    of any kind, express or implied, about the completeness, accuracy, reliability, suitability 
+                    or availability with respect to the website or the information, products, services, or related 
+                    graphics contained on the website for any purpose. Any reliance you place on such information is 
+                    therefore strictly at your own risk.
+				</p>
+                <p>
+                    In no event will we be liable for any loss or damage including without limitation, indirect or 
+                    consequential loss or damage, or any loss or damage whatsoever arising from loss of data or profits 
+                    arising out of, or in connection with, the use of this website.
+                </p>
+                <p>
+                    Through this website you are able to link to other websites which are not under the control of <strong>Microware Solution</strong>. 
+                    We have no control over the nature, content and availability of those sites. The inclusion of any links does not necessarily 
+                    imply a recommendation or endorse the views expressed within them.
+                </p>
+                <p>
+                    Every effort is made to keep the website up and running smoothly. However, Microware Solution takes no responsibility for, 
+                    and will not be liable for, the website being temporarily unavailable due to technical issues beyond our control.
+                </p>
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">I Agree</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script language="JavaScript">
+        function ShowHide(divId) {
+            if (document.getElementById(divId).style.display == 'none') {
+                document.getElementById(divId).style.display = 'block';
+            }
+            else {
+                document.getElementById(divId).style.display = 'block';
+                document.getElementById(divId).style.display = 'none';
+            }
+        }
+    </script>
+}
+
+
+
+
+

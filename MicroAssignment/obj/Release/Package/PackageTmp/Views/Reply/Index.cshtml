@@ -1,0 +1,150 @@
+﻿@model IEnumerable<MicroAssignment.Models.ReplyAssignment>
+
+@{
+    ViewBag.Title = "Index";
+    int sn = 1;
+    var db = new MicroAssignment.Models.MicroContext();
+}
+
+<!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                 <div class="alert alert-info">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i><strong style="font-size:18px">Submitted Assignment on @ViewBag.Assignment</strong> &nbsp; </strong>
+                </div>
+                <ol class="breadcrumb">
+                    <li>@Html.ActionLink("<< Bact to control panel","ControlPanel","Profile")
+                    </li>
+                    <li class="active">Menu</li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+
+<table class="table table-hover table-bordered table-striped">
+    <tr>
+        <th>
+            S/N
+        </th>
+        <th>
+             Name
+        </th>
+        <th>
+            Reg No
+        </th>
+       
+        <th>
+           Level
+        </th>
+        
+        <th>
+           Assignment
+        </th>
+        <th>
+            Test
+        </th>
+        <th>
+            Exam
+        </th>
+        <th>
+            Total
+        </th>
+        <th>
+            Avrage
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    var students = db.UserProfiles.FirstOrDefault(x => x.UserId == item.StudentId);
+    <tr>
+        <td>
+            @(sn++)
+        </td>
+        <td>
+            @students.FullName.ToUpper()
+        </td>
+        <td>
+            @if(students.RegistrationNumber!=null || students.RegistrationNumber!=""){
+            <span>@students.RegistrationNumber.ToUpper()</span>
+            }
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.Levels.FullLevel)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Score)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TestScore)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamScore)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalSCore)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Avrage)
+        </td>
+        <td>
+            @if (item.Score != null)
+            {
+                <a href="#"  data-toggle="modal" data-target="#t_and_c_m-@item.ReplyAssignmentId">Add Test/Exam Score </a> <text> | </text>
+            }
+            else
+            {
+                 <a href="#" >>>></a> <text> | </text>
+            }
+            @Html.ActionLink("View Assignment", "AddScore", new { id=item.ReplyAssignmentId, assignmentId=ViewBag.AssignmentId })
+
+            <!-- Modal -->
+<div class="modal fade" id="t_and_c_m-@item.ReplyAssignmentId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel" style="font-weight:bold;text-align:center;color:#0a78c7">Upload Result</h4>
+			</div>
+			<div class="modal-body">
+                <div>
+                    <label>NAME : @students.FullName.ToUpper()</label>
+                </div>
+				@using (Html.BeginForm("Result", "Reply", new { id = item.ReplyAssignmentId, assignmentId=item.AssignmentId }))
+                    {
+                        <img src="~/Images/warning.jpg" style="float:right" />
+                    <div>
+                        <label>Enter Test Score</label>
+                        <input type="number" name="TestScore" class="form-control" value="@item.TestScore" style="width:300px" required placeholder="Integer numbers only" />
+                    </div>
+                    <div>
+                        <label>Enter Exam Score</label>
+                        <input type="number" name="ExamScore" class="form-control" value="@item.ExamScore" style="width:300px" required placeholder="Integer numbers only"/>
+                    </div>
+                    <div class="modal-footer">
+                        @if (item.TestScore == null || item.ExamScore == null)
+                        {
+                            <input type="submit" class="btn btn-primary" value="Save" />
+                        }
+                        else
+                        {
+                            <input type="submit" class="btn btn-primary" value="Update" />
+                        }
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        </div>
+                    }
+			</div>
+			
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+        </td>
+      
+    </tr>
+}
+
+</table>

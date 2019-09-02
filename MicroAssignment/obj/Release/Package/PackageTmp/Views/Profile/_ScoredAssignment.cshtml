@@ -1,0 +1,39 @@
+﻿<div>
+    @{
+        int sn = 1;
+        var db = new MicroAssignment.Models.MicroContext();
+    }
+    <h5>Assignment Score Sheet</h5>
+    <table class="table table-hover table-bordered table-striped table-condensed" style="font-size:x-small;font-weight:bold">
+        <tr>
+            <th>S/N</th>
+            <th>Lecturer Name</th>
+            <th>CourseCode</th>
+            <th>Topic</th>
+            <th>Reg No.</th>
+            <th>Score</th>
+            <th>Date</th>
+        </tr>
+   @foreach (var item in ViewBag.SubmitedAssignment)
+    {
+       int id =item.StudentId;
+       var userDetails = db.UserProfiles.FirstOrDefault(x => x.UserId == id);
+       <tr>
+           <td>
+               @(sn++)
+           </td>
+            <td>@item.UserProfile.FullName</td>
+           <td>@item.Assignment.CourseCode</td>
+           <td>
+               <a title="View Assignment Details" href="@Url.Content("~/Reply/Details/")@item.ReplyAssignmentId">@item.Assignment.Topic</a>
+
+           </td>
+           <td>@userDetails.RegistrationNumber</td> 
+           <td>
+                @item.Score
+            </td>
+           <td>@item.Date.ToString().Substring(0,10)</td>
+       </tr> 
+    }
+    </table>
+</div>

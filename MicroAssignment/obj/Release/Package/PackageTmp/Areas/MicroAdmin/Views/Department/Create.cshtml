@@ -1,0 +1,51 @@
+﻿@model MicroAssignment.Models.Department
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Department</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SchoolId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("SchoolId","Select School")
+            @Html.ValidationMessageFor(model => model.SchoolId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DepartmentName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DepartmentName)
+            @Html.ValidationMessageFor(model => model.DepartmentName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DepartmentCode)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DepartmentCode)
+            @Html.ValidationMessageFor(model => model.DepartmentCode)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

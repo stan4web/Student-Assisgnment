@@ -1,0 +1,107 @@
+﻿@model MicroAssignment.Models.ReplyAssignment
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-9">
+         <div class="alert alert-info">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Departmental Assignment / Reply</strong>
+                </div>
+        <p style="color:#f00">@TempData["Error"]</p>
+<table class="table table-bordered table-hover table-striped table-small" >
+    
+    <tr>
+        <td>Topic: </td>
+        <td>@ViewBag.Topic</td>
+    </tr>
+    <tr>
+        <td>Published By: </td>
+        <td><strong>@ViewBag.Lecturer</strong></td>
+    </tr>
+    <tr>
+        <td>Published On: </td>
+        <td>@ViewBag.Date2</td>
+    </tr>
+    <tr>
+        <td>Expire On: </td>
+        <td>@ViewBag.Date</td>
+    </tr>
+    <tr>
+        <td>Content</td>
+        <td>@Html.Raw(ViewBag.Content)</td>
+    </tr>
+</table>
+<p style="color:#f00;text-align:center">@TempData["error"]</p>
+<div style="text-align:right;"></div>
+@using (Html.BeginForm("Create", "Reply", FormMethod.Post, new {enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <input type="hidden" value="@ViewBag.DepartmentId" name="DepartmentId" />
+    <input type="hidden" value="@ViewBag.levelId" name="levelId" />
+    <input type="hidden" value="@ViewBag.lecturerId" name="UserId" />
+    
+    <fieldset>
+        <legend>Reply Assignment</legend>
+
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Content)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(c => c.Content, new { @id = "summernote" })
+            @Html.ValidationMessageFor(model => model.Content)
+        </div>
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FilePath)
+        </div>
+        <div class="editor-field">
+            <span style="width:300px;" class="form-control"><input type="file" id="fileToUpload" name="file" /></span>
+            @Html.ValidationMessageFor(model => model.FilePath)
+        </div>
+
+
+        <p style="margin-top:10px">
+           @Html.ActionLink("<< Back to profile", "Index", "Profile", null, new { @class = "btn btn-danger" }) | <input type="submit" value="Submit Assignment" class="btn btn-primary" />
+        </p>
+    </fieldset>
+}
+</div>
+
+     <div class="col-lg-3">
+        <div class="alert alert-warning">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Advertisement </strong>
+                </div>
+               @Html.Action("_AdvertList","Profile")
+    </div>
+
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <link href="~/Content/summernote/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/summernote/summernote.css" rel="stylesheet" />
+
+    <script src="~/Content/summernote/summernote.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                height: 400,
+            });
+        });
+    </script>
+
+   
+}
+
+

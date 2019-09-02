@@ -1,0 +1,87 @@
+﻿@model MicroAssignment.Models.Tutorial
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><i class="icon-user icon-large"></i>&nbsp;  Settings - Tutorials -Create</strong>
+    </div> 
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Tutorial</legend>
+       
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CategoryId, "Category")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CategoryId", ViewBag.CategoryId as SelectList, "Select Category", new { id = "Department", @required=true, @class = "form-control",@style="margin-top:7px;width:300px"})
+            @Html.ValidationMessageFor(model => model.CategoryId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CourseName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CourseName, new {@class="form-control",@style="width:300px;margin-top:10px",@required=true })
+            @Html.ValidationMessageFor(model => model.CourseName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Topic)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Topic, new {@class="form-control",@style="width:300px;margin-top:10px",@required=true })
+            @Html.ValidationMessageFor(model => model.Topic)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Content)
+        </div>
+        <div class="editor-field">
+             @Html.TextAreaFor(c => c.Content, new { @id = "summernote" })
+            @Html.ValidationMessageFor(model => model.Content)
+        </div>
+      
+        
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsHidden)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsHidden)
+            @Html.ValidationMessageFor(model => model.IsHidden)
+        </div>
+
+       
+
+        <p style="margin-top:10px">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/summernote/summernote.css" rel="stylesheet" />
+
+    <script src="~/Content/summernote/summernote.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                height: 400,
+            });
+        });
+    </script>
+}
+

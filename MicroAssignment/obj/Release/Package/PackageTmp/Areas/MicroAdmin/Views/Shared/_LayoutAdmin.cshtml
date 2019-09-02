@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - School Admin Dashboard</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        
+        <link href="~/Content/admin/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/Content/admin/css/custom.css" rel="stylesheet" />
+        <link href="~/Content/admin/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap/css/datepicker.css" rel="stylesheet" />
+
+
+    </head>
+    <body>
+        
+        <div id="wrapper">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">MicroAdmin</a> 
+            </div>
+  <div style="color: white;
+padding: 15px 50px 5px 50px;
+float: right;
+font-size: 16px;"> @*<a href="#" class="btn btn-danger square-btn-adjust">Logout</a>*@ 
+       @using (Html.BeginForm("LogOff", "Account",new{area = ""}, FormMethod.Post, new { id = "logoutForm" })) {
+            @Html.AntiForgeryToken()
+
+                        
+          @: Current User: @WebSecurity.CurrentUserName <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-danger square-btn-adjust">Log off</a>
+                          
+        }
+  </div>
+        </nav>   
+           <!-- /. NAV TOP  -->
+                <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+				<li class="text-center">
+                    <img src="~/COntent/admin/img/find_user.png" class="user-image img-responsive"/>
+					</li>
+				
+					
+                    <li>
+                        <a class="@ViewBag.Main"  href="@Url.Content("~/MicroAdmin/Home/")"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
+                    </li>
+                     	
+                    	
+                     <li  >
+                        <a  class="@ViewBag.UserManager" href="@Url.Content("~/MicroAdmin/Home/Users/")"><i class="fa fa-user fa-3x"></i> User Manager</a>
+
+                    </li>	
+                    
+                    <li>
+                        <a class="@ViewBag.Post" href="#"><i class="fa fa-sitemap fa-3x"></i> Content Management<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="@Url.Content("~/MicroAdmin/Home/Post/")">Posts</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicroAdmin/TutorialPage/")">Tutorial</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicroAdmin/Home/Comment")">Comment</a>
+                            </li>
+                             
+                            <li>
+                                <a href="@Url.Content("~/MicroAdmin/SchoolMaterial/")">Seminar/Project</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicroAdmin/AdminAssignment/")">Students Assignment</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicroAdmin/RepliedAssginment/")">Students Replied Assignment</a>
+                            </li>
+                        </ul>
+                      </li> 
+                    <li>
+                        <a class="@ViewBag.Main" href="#"><i class="fa fa-cog fa-3x"></i> Settings<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="@Url.Content("~/MicroAdmin/Category/")">Category</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicroAdmin/Institutions/")">School</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicroAdmin/Department/")">Department</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicroAdmin/Level/")">Level</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicroAdmin/Advert/")">Advertisement</a>
+                            </li>
+                            <li>
+                                <a href="#">Front Page</a>
+                            </li>
+                            
+                        </ul>
+                      </li> 		
+					
+					                   
+                    	
+                </ul>
+               
+            </div>
+            
+        </nav>  
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+            <div id="page-inner">
+                @RenderBody()
+    </div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+        
+ 
+        <script src="~/Content/admin/js/jquery-1.10.2.js"></script>
+<!-- BOOTSTRAP SCRIPTS -->
+    <script src="~/Content/admin/js/bootstrap.min.js"></script>
+        <!-- METISMENU SCRIPTS -->
+    <script src="~/Content/admin/js/jquery.metisMenu.js"></script>
+     <!-- MORRIS CHART SCRIPTS -->
+     <script src="~/Content/admin/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="~/Content/admin/js/morris/morris.js"></script>
+
+        
+      <!-- CUSTOM SCRIPTS -->
+    <script src="~/Content/admin/js/custom.js"></script>
+
+        <!-- jQuery Version 1.11.0 -->
+        <script src="~/Content/bootstrap/js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+        <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+
+        <script src="~/Content/bootstrap/js/bootstrap-datepicker.js"></script>
+
+
+
+        @RenderSection("scripts", required: false)
+
+        <script>
+            if (top.location != location) {
+                top.location.href = document.location.href;
+            }
+            $(function () {
+                window.prettyPrint && prettyPrint();
+                $('#dp1').datepicker({
+                    format: 'mm-dd-yyyy'
+                });
+                $('#dp2').datepicker();
+                $('#dp3').datepicker();
+                $('#dp3').datepicker();
+                $('#dpYears').datepicker();
+                $('#dpMonths').datepicker();
+
+
+                var startDate = new Date(2012, 1, 20);
+                var endDate = new Date(2012, 1, 25);
+                $('#dp4').datepicker()
+                    .on('changeDate', function (ev) {
+                        if (ev.date.valueOf() > endDate.valueOf()) {
+                            $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+                        } else {
+                            $('#alert').hide();
+                            startDate = new Date(ev.date);
+                            $('#startDate').text($('#dp4').data('date'));
+                        }
+                        $('#dp4').datepicker('hide');
+                    });
+                $('#dp5').datepicker()
+                    .on('changeDate', function (ev) {
+                        if (ev.date.valueOf() < startDate.valueOf()) {
+                            $('#alert').show().find('strong').text('The end date can not be less then the start date');
+                        } else {
+                            $('#alert').hide();
+                            endDate = new Date(ev.date);
+                            $('#endDate').text($('#dp5').data('date'));
+                        }
+                        $('#dp5').datepicker('hide');
+                    });
+
+                // disabling dates
+                var nowTemp = new Date();
+                var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+                var checkin = $('#dpd1').datepicker({
+                    onRender: function (date) {
+                        return date.valueOf() < now.valueOf() ? 'disabled' : '';
+                    }
+                }).on('changeDate', function (ev) {
+                    if (ev.date.valueOf() > checkout.date.valueOf()) {
+                        var newDate = new Date(ev.date)
+                        newDate.setDate(newDate.getDate() + 1);
+                        checkout.setValue(newDate);
+                    }
+                    checkin.hide();
+                    $('#dpd2')[0].focus();
+                }).data('datepicker');
+                var checkout = $('#dpd2').datepicker({
+                    onRender: function (date) {
+                        return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+                    }
+                }).on('changeDate', function (ev) {
+                    checkout.hide();
+                }).data('datepicker');
+            });
+	</script>
+    </body>
+</html>

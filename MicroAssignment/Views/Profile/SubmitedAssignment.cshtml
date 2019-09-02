@@ -1,0 +1,56 @@
+﻿@model IEnumerable<MicroAssignment.Models.Assignment>
+
+@{
+    ViewBag.Title = "SubmitedAssignment";
+    int sn = 1;
+}
+
+<h2>SubmitedAssignment</h2>
+
+<table class="table table-hover table-striped table-bordered">
+    <tr>
+        <th>
+            S/N
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Topic)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @(sn++)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Topic)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        
+        <td>
+            @Html.ActionLink("View Students", "ControlLevel", new { id=item.AssignmentId, departmentId=ViewBag.DepartmentId,levelId=ViewBag.LevelId,userId=ViewBag.LevelId }) |
+            
+        </td>
+    </tr>
+}
+
+</table>

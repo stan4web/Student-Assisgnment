@@ -1,0 +1,142 @@
+﻿@model MicroAssignment.Models.Material
+
+@{
+    ViewBag.Title = "Details";
+}
+<!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Download : 
+                    <small>@Model.Topic</small>
+                </h3>
+                <ol class="breadcrumb">
+                    <li>@Html.ActionLink("Profile Page","Index","Profile")</li>
+                    <li class="active"></li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+
+@*<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><i class="icon-user icon-large"></i>&nbsp; Details On: @Model.Topic</strong>
+    </div>*@ 
+
+<div style="width:80%;margin-left:auto;margin-right:auto;padding:20px;border:solid 1px #cfcccc;text-align:justify">
+ <div>
+       <button data-toggle="modal" data-target="#myModal" class="btn btn-success">DOWNLOAD</button> | @Html.ActionLink("<< Back to List", "Index", null, new { @class = "btn btn-default" })
+   </div>
+    <h3 style="text-align:center;font-weight:bold">
+        @Html.DisplayFor(model => model.Topic)
+    </h3>
+    <hr />
+
+    <div class="display-field">
+        @Html.Raw(Model.Description)
+    </div>
+
+   <div>
+       <button data-toggle="modal" data-target="#myModal" class="btn btn-success">DOWNLOAD</button> | @Html.ActionLink("<< Back to List", "Index", null, new { @class = "btn btn-default" })
+   </div>
+    
+</div>
+
+                  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	                    <div class="modal-dialog modal-lg">
+		                    <div class="modal-content">
+			                    <div class="modal-header">
+				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				                    <h4 class="modal-title" id="myModalLabel">Payment Method</h4>
+			                    </div> 
+			                    <div class="modal-body">
+
+				                 <div>
+                                     <img src="~/Content/admin/img/1.png" class="img" data-src="holder.js/140x140" style="width:80px;height:80px;border:solid 1px #e9e4e4;padding:2px;margin-left:10px;float:left;margin-right:30px" alt=""/>
+                                 <table class="table table-hover table-striped table-bordered" style="width:50%">
+                                     <tr>
+                                         <td>BANK NAME: </td>
+                                         <td>FIRST BANK</td>
+                                     </tr>
+                                     <tr>
+                                         <td>ACCOUNT NAME: </td>
+                                         <td>IBEKWE STANLEY C.</td>
+                                     </tr>
+                                     <tr>
+                                         <td>ACCOUNT NUMBER</td>
+                                         <td>3062942185</td>
+                                     </tr>
+                                     
+                                 </table>
+                                 </div>
+                                   <hr />
+                                    
+                                     <div>
+                                     <img src="~/Content/admin/img/2.png" class="img" data-src="holder.js/140x140" style="width:80px;height:80px;border:solid 1px #e9e4e4;padding:2px;margin-left:10px;float:left;margin-right:30px" alt=""/>
+				                 
+                                 <table class="table table-hover table-striped table-bordered" style="width:50%">
+                                     <tr>
+                                         <td>BANK NAME: </td>
+                                         <td>GT-BANK</td>
+                                     </tr>
+                                     <tr>
+                                         <td>ACCOUNT NAME: </td>
+                                         <td>IBEKWE STANLEY C.</td>
+                                     </tr>
+                                     <tr>
+                                         <td>ACCOUNT NUMBER: </td>
+                                         <td>0118493704</td>
+                                     </tr>
+                                     
+                                 </table>
+                                 </div>
+                                   <hr />  
+
+                                    <div>
+                                     <img src="~/Content/admin/img/3.png" class="img" data-src="holder.js/140x140" style="width:80px;height:80px;border:solid 1px #e9e4e4;padding:2px;margin-left:10px;float:left;margin-right:30px" alt=""/>
+				                 
+                                 <table class="table table-hover table-striped table-bordered" style="width:50%">
+                                     <tr>
+                                         <td>BANK NAME: </td>
+                                         <td>FIDELITY BANK</td>
+                                     </tr>
+                                     <tr>
+                                         <td>ACCOUNT NAME: </td>
+                                         <td>IBEKWE STANLEY C.</td>
+                                     </tr>
+                                     <tr>
+                                         <td>ACCOUNT NUMBER: </td>
+                                         <td>6015067037</td>
+                                     </tr>
+                                     
+                                 </table>
+                                 </div>
+                                   <hr />  
+
+                                    <div>
+                                     <img src="~/Content/admin/img/4.png" class="img" data-src="holder.js/140x140" style="width:80px;height:80px;border:solid 1px #e9e4e4;padding:2px;margin-left:10px;float:left;margin-right:30px" alt=""/>
+				                 
+                                 <table class="table table-hover table-striped table-bordered" style="width:50%">
+                                     <tr>
+                                         <td>BANK NAME: </td>
+                                         <td>KEYSTONE BANK</td>
+                                     </tr>
+                                     <tr>
+                                         <td>ACCOUNT NAME: </td>
+                                         <td>IBEKWE STANLEY C.</td>
+                                     </tr>
+                                     <tr>
+                                         <td>ACCOUNT NUMBER: </td>
+                                         <td>6000644066</td>
+                                     </tr>
+                                     
+                                 </table>
+                                 </div>
+				
+				
+			                    </div>
+			                    <div class="modal-footer">
+				                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			                    </div>
+		                    </div><!-- /.modal-content -->
+	                    </div><!-- /.modal-dialog -->
+                    </div>

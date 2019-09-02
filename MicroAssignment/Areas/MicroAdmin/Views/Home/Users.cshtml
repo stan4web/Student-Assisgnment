@@ -1,0 +1,213 @@
+@model PagedList.IPagedList<MicroAssignment.Models.UserProfile>
+@using System.Data.Entity;
+@using System.Web.Mvc;
+@{
+    
+    ViewBag.Title = "Users";
+    var roles = ((string[])ViewBag.Roles).OrderBy(x => x);
+    int sn = 1;
+    var db = new MicroAssignment.Models.MicroContext();
+    var schoolList = db.Schools.Include(x => x.Departments);
+}
+
+
+<div class="row-fluid">
+    <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><i class="icon-user icon-large"></i>&nbsp;  User Management </strong>
+    </div>   
+<div>
+<div>
+
+
+</div>
+
+    @if(TempData["Report"] != null)
+      {
+       <span style="color:red;"> @TempData["Report"]</span>
+      }
+                      
+                        
+
+<div style="margin-bottom:7px">
+    @using (Html.BeginForm())
+    {
+        <div style="margin-bottom:5px">
+            Search Log: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {@class="search-query", @placeholder="Search"}) 
+            <input class = "btn" type="submit" value="Search" />
+        </div>
+        <strong>Search student by: Surname, firstname,phonenumber, and username</strong>
+    }
+</div>
+
+
+<table class="table table-bordered table-striped table-hover table-condensed">
+    <thead>
+        <tr>
+            <th>S/N</th>
+            <th>FullName </th>
+            <th>UserName </th>
+            @foreach (var role in roles)
+            {
+                <th>@role
+                </th>
+            }
+            <th>CreationDate</th>
+            <th>PasswordChangedDate</th>
+        
+            <th>PasswordFailure</th>
+        </tr>
+
+
+    </thead>
+    <tbody>
+        @foreach (var user in Model.OrderBy(z => z.SurName))
+        {
+            if (user.DepartmentId != null)
+            {
+                var school = schoolList.FirstOrDefault(x => x.SchoolId == user.Department.SchoolId);
+                ViewBag.School = school.SchoolName;
+            }
+            
+            <tr>
+                <td>@(sn++)</td>
+                <td>
+                    @user.FullName
+                </td>
+                <td>
+                    <a href="#" data-toggle="modal" data-target="#myModal-@user.UserId">View</a>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal-@user.UserId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	                    <div class="modal-dialog modal-lg" id="myModal">
+		                    <div class="modal-content">
+			                    <div class="modal-header">
+				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				                    <h4 class="modal-title" id="myModalLabel">User Profile </h4>
+			                    </div>
+                                        @if (user.ImageUrl == null)
+                                        {
+                                            <img src="~/Content/admin/img/find_user.png" class="img-circle" data-src="holder.js/140x140" style="width:80px;height:100px;border:solid 1px #e9e4e4;padding:2px;margin-left:10px" alt=""/>
+                                        }
+                                        else
+                                        {
+                                            <img class="img-circle" data-src="holder.js/140x140" src="/Uploads/Items/@System.IO.Path.GetFileName(user.ImageUrl)" style="width:80px;height:100px;border:solid 1px #e9e4e4;padding:2px;margin-left:10px" alt="">
+                                        }
+			                    <div class="modal-body">
+				                 
+                                    <table class="table table-hover table-striped table-bordered">
+                                        <tr>
+                                            <td>FullName</td>
+                                            <td>@user.FullName</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phone No</td>
+                                            <td>@user.PhoneNumber</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email Address</td>
+                                            <td>@user.EmailAddress</td>
+                                        </tr>
+                                        <tr>
+                                            <td>School</td>
+                                            <td>@ViewBag.School</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Registration No</td>
+                                            <td>@user.RegistrationNumber</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>Registration Type</td>
+                                            <td>@user.RegistrationType</td>
+                                        </tr>
+
+                                    </table>
+				
+			                    </div>
+			                    <div class="modal-footer">
+				                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			                    </div>
+		                    </div><!-- /.modal-content -->
+	                    </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
+                </td>
+
+                @foreach (var role in roles)
+                {
+                    <td>
+                        @using (Html.BeginForm("UserToRole", "Home", new { page = Model.PageNumber }))
+                        {
+                            <input type="hidden" value="@user.UserName" name="username" />
+                            <input type="hidden" value="@role" name="rolename" />
+                            <input type="checkbox" name="ischecked" onclick="this.form.submit();" value="true" checked="@System.Web.Security.Roles.IsUserInRole(@user.UserName, role)" />
+                            
+                        }
+
+
+                    </td>
+                }
+                <td>
+                    @WebSecurity.GetCreateDate(user.UserName)
+                </td>
+                <td>
+                    @WebSecurity.GetPasswordChangedDate(user.UserName)
+                </td>
+                
+                <td>
+                    @WebSecurity.GetPasswordFailuresSinceLastSuccess(user.UserName)
+                </td>
+                
+
+            </tr>  
+        
+        }
+    </tbody>
+</table>
+
+
+<p>
+    <a href="~/MicroAdmin/Home/Roles"  class="btn btn-info">Roles</a>
+</p>
+<p>
+   <a href="~/MicroAdmin/Home/Index" class="btn btn-inverse">Back to admin panel</a>
+</p>
+</div>
+
+</div>
+<p style="text-align:right; margin-top:10px">
+        <ul class="pager">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of   @Model.PageCount
+     
+    @if (Model.HasPreviousPage)
+    {
+        <li>@Ajax.ActionLink("<<  First", "Users", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+        @Html.Raw(" ");
+        <li>@Ajax.ActionLink("< Prev", "Users", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+    }
+    else
+    {
+       
+        @Html.Raw(" ");
+        @: <li><span><< Prev</span> </li>
+    }
+      
+    @if (Model.HasNextPage)
+    {
+        
+       <li> @Ajax.ActionLink("Next >", "Users", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+         @Html.Raw(" ");
+       <li> @Ajax.ActionLink("Last >>", "Users", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+    }
+    else
+    {
+        @:<li><span>Next >></span> </li>
+        @Html.Raw(" ")
+       
+    }
+            </ul>
+</p>
+
+

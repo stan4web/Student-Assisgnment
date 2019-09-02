@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MicroAssignment.Models.Tutorial>
+
+@{
+    ViewBag.Title = "Index";
+    int sn = 1;
+    var db = new MicroAssignment.Models.MicroContext();
+}
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><i class="icon-user icon-large"></i>&nbsp;  Settings - Tutorials - @ViewBag.CategoryName</strong>
+    </div> 
+
+<p>
+    @Html.ActionLink("Add New", "Create", null, new { @class="btn btn-info"}) | @Html.ActionLink("Back to category", "Category",null, new { @class = "btn btn-default" })
+    
+</p>
+<div class="row">
+   
+
+@foreach (var item in Model) {
+    var userdetails = db.UserProfiles.FirstOrDefault(x => x.UserId == item.UserId);
+    
+    
+     <!-- Blog Entries Column -->
+            <div class="col-md-8">
+
+                <!-- First Blog Post -->
+                <h4>
+                    <a href="#">@Html.DisplayFor(modelItem => item.Topic)</a>
+                </h4>
+                <p class="lead">
+                    by <a href="#">@userdetails.FullName</a>
+                </p>
+                <p><i class="fa fa-clock-o"></i> Posted on @Html.DisplayFor(modelItem => item.Date)</p>
+                <hr>
+                <a href="blog-post.html">
+                    @if (userdetails.ImageUrl == null || userdetails.ImageUrl == "")
+                    {
+                        <img src="~/Images/no-avatar.jpg" style="width:100px;height:100px" />
+                    }else{
+                   <img src="~/Uploads/Items/@System.IO.Path.GetFileName(userdetails.ImageUrl)" style="width:100px;height:100px" />
+                    }
+                </a>
+                <hr>
+                <p>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                    <hr />
+                    @Html.Raw(item.ShortTutor)
+                </p>
+                <a class="btn btn-primary" href="@Url.Content("~/Tutorial/Details/")@item.TutorialId">Read More <i class="fa fa-angle-right"></i></a>
+
+                <hr>
+        </div>
+}
+
+</div>

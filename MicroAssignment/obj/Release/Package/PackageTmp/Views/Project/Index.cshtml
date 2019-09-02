@@ -1,0 +1,107 @@
+﻿@model PagedList.IPagedList<MicroAssignment.Models.Material>
+
+@{
+    ViewBag.Title = "Index";
+    int sn = 1;
+}
+@helper Truncate(string input, int length)
+{
+     if (input.Length <= length) {
+          @input
+     } else {
+          @Html.Raw(input.Substring(0, length))<text>......</text>
+        
+     }
+}
+
+
+   <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-9">
+                
+                <div class="alert alert-info">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Project Guide </strong>
+                </div>
+
+ <div style="margin-bottom:7px">
+                            @using (Html.BeginForm())
+                            {
+                               <div >@Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {@class = "form-control",@placeholder="Search Post",@style="float:left;margin-right:2px;width:300px"}) 
+                               <input class = "btn btn-default" type="submit" value="Search>>" /></div>
+                              
+                            }
+                        </div>
+<hr />
+
+
+@foreach (var item in Model.OrderByDescending(X=>X.MaterialId)) {
+
+
+                <h6>
+                    <a href="#">Department of @Html.DisplayFor(modelItem => item.Department.DepartmentName)</a>
+                </h6>
+                
+                <p><i class="fa fa-clock-o"></i> Posted on @Html.DisplayFor(modelItem => item.DateUploaded)</p>
+            
+                <a href="@Url.Content("~/Project/Details/")@item.MaterialId">
+                  <img src="~/Images/pdf2.png" style="width:50px;height:50px" />
+                </a>
+               
+                <p>
+                    @Html.DisplayFor(modelItem => item.Topic)
+                </p>
+                <a class="btn btn-primary" href="@Url.Content("~/Project/Details/")@item.MaterialId">Read More <i class="fa fa-angle-right"></i></a>
+
+                <hr>
+
+}
+
+<p style="text-align:right; margin-top:10px">
+        <ul class="pager">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of   @Model.PageCount
+     
+    @if (Model.HasPreviousPage)
+    {
+        <li>@Ajax.ActionLink("<<  First", "Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+        @Html.Raw(" ");
+        <li>@Ajax.ActionLink("< Prev", "Index", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+    }
+    else
+    {
+       
+        @Html.Raw(" ");
+        @: <li><span><< Prev</span> </li>
+    }
+      
+    @if (Model.HasNextPage)
+    {
+        
+       <li> @Ajax.ActionLink("Next >", "Index", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+         @Html.Raw(" ");
+       <li> @Ajax.ActionLink("Last >>", "Index", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+    }
+    else
+    {
+        @:<li><span>Next >></span> </li>
+        @Html.Raw(" ")
+       
+    }
+            </ul>
+</p>
+</div>
+
+
+
+
+          
+<div class="col-lg-3">
+               
+  <div class="alert alert-warning">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Advertisement </strong>
+                </div>
+               @Html.Action("_AdvertList","Profile")
+    
+</div>   

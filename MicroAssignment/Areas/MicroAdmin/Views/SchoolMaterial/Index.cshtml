@@ -1,0 +1,79 @@
+﻿@model PagedList.IPagedList<MicroAssignment.Models.Material>
+
+@{
+    ViewBag.Title = "Index";
+    int sn = 1;
+}
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><i class="icon-user icon-large"></i>&nbsp;  Seminar / Project </strong>
+    </div> 
+<div style="margin-bottom:7px">
+    @using (Html.BeginForm())
+    {
+        <div style="margin-bottom:5px">
+            Search Log: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {@class="search-query", @placeholder="Search"}) 
+            <input class = "btn" type="submit" value="Search" />
+        </div>
+        <strong>Search student by: Post content</strong>
+    }
+</div> 
+<hr />
+<p>
+    @Html.ActionLink("Add New", "Create")
+</p>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            S/N
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Depatment
+        </th>
+        <th>
+            Topic
+        </th>
+       
+        <th>
+            Date
+        </th>
+        <th>
+            Url
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @(sn++)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartmentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Topic)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.DateUploaded)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocumentUrl)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaterialId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaterialId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaterialId })
+        </td>
+    </tr>
+}
+
+</table>

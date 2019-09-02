@@ -1,0 +1,49 @@
+﻿@model MicroAssignment.Models.LoginModel
+
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p style="text-align:right;width:100%">
+    @Html.ActionLink("Create New Instructors Account","Instructor","Account")
+</p>
+
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend></legend>
+        <div style="margin-left:auto;margin-right:auto;width:400px;padding:20px;border:solid 1px #eae5e5;text-align:center">
+            <img src="~/Images/p.png"/>
+            <hr />
+            <div style="text-align:left">
+                <label>User Name</label>
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+            <div style="text-align:left">
+                <label>Password</label>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+            <div style="text-align:left">
+                @Html.CheckBoxFor(m => m.RememberMe) <strong style="color:#70600b">Remember Me?</strong>
+                @*@Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })*@
+            </div>
+            <div style="margin-top:10px">
+                <input type="submit" value="Log in" class="btn btn-primary" /> |
+                @Html.ActionLink("Sign Up", "Register") if you don't have an account.
+            </div>
+        </div>
+       
+    </fieldset>
+    
+}
+
+@*<div style="height:120px;width:100%"></div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

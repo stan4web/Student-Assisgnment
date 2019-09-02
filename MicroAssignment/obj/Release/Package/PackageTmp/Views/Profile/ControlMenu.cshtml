@@ -1,0 +1,70 @@
+﻿@model MicroAssignment.Models.UserProfile
+@{
+    ViewBag.Title = "ControlMenu";
+    int sn = 1;
+}
+
+<!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h4 class="page-header">The Department of
+                    <small>@ViewBag.Department</small>
+                </h4>
+                <ol class="breadcrumb">
+                    <li>@Html.ActionLink("<< Bact to control panel","ControlPanel","Profile")
+                    </li>
+                    <li class="active">Menu</li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+
+ <!-- Content Row -->
+        <div class="row">
+            <!-- Sidebar Column -->
+            <div class="col-md-3">
+                <div class="list-group">
+                    <table class="table table-hover table-striped table-bordered">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                   
+                    @foreach (var dept in ViewBag.Level)
+                    {
+                        string fulllevel = dept.FullLevel;
+                        <tr>
+                            <td>
+                                @(sn++)
+                            </td>
+                            <td>
+                               @Html.ActionLink(fulllevel, "SubmitedAssignment", new { id = Model.UserId, departmentId = ViewBag.DepartmentId, levelId = @dept.LevelId }, new { @class = "list-group-item" })
+                            </td>
+                        </tr>
+                       
+                    }
+                   </table>
+                </div>
+                 
+            </div>
+            <!-- Content Column -->
+            <div class="col-md-9">
+                @if (Model.ImageUrl == null)
+                {
+                    <img src="~/Images/p.png" />
+                }
+                else
+                {
+                    <img src="/Uploads/Items/@System.IO.Path.GetFileName(Model.ImageUrl)" style="width:80px;border:solid 1px #e5e8ea;padding:3px" />
+                }
+                <h4>Submited Assignment</h4>
+               
+            </div>
+
+            <!-- Content Column -->
+            <div class="col-md-9">
+                <h2>Section Heading</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, et temporibus, facere perferendis veniam beatae non debitis, numquam blanditiis necessitatibus vel mollitia dolorum laudantium, voluptate dolores iure maxime ducimus fugit.</p>
+            </div>
+        </div>
+        <!-- /.row -->

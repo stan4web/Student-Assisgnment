@@ -1,0 +1,127 @@
+﻿@model MicroAssignment.Models.UserProfile
+
+@{
+    ViewBag.Title = "ControlPanel";
+    int sn = 1;
+    int sn2 = 1;
+}
+
+
+ <div class="row">
+
+        
+<p style="color:#25cf3b;">@TempData["Report"]</p>
+ <!-- Content Row -->
+
+
+            <!-- Content Column -->
+            <div class="col-md-9">
+
+
+                <div class="alert alert-info">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i><strong style="font-size:18px">Hello!</strong> &nbsp; @ViewBag.ProfileName, Welcome to @ViewBag.Dept</strong>
+                </div>
+                <ol class="breadcrumb">
+                    <li>@Html.ActionLink("Home", "ControlPanel", "Profile", null, new { @class = "btn btn-primary btn-xs" })</li>
+                    <li>@Html.ActionLink("Upload Assignment","Create","Assignment", null, new { @class = "btn btn-success btn-xs" })</li>
+                    @*<li class="active"><a class = "btn btn-danger btn-xs">C-Panel</a></li>*@
+                    <li style="float:right"><button class="btn-primary btn-xs" data-toggle="modal" data-target="#t_and_c_m">Disclaimer </button></li>
+                </ol>
+
+
+
+                @if (Model.ImageUrl == null)
+                {
+                    <img src="~/Images/p.png" />
+                }
+                else
+                {
+                    <img src="/Uploads/Items/@System.IO.Path.GetFileName(Model.ImageUrl)" style="width:80px;border:solid 1px #e5e8ea;padding:3px" />
+                }
+                <h4>My Assignments</h4>
+               <table class="table table-hover table-bordered table-striped table-condensed">
+                <tr>
+                    <th>S/N</th>
+                    <th>CourseCode</th>
+                    <th>CourseName</th>
+                    <th>Topic</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+               @foreach (var item in ViewBag.Assignment)
+                {
+                   <tr>
+                       <td>
+                           @(sn2++)
+                       </td>
+                       <td>@item.CourseCode</td>
+                       <td>@item.CourseName</td>
+                       <td>@item.Topic</td>
+                       <td>@item.Date.ToString().Substring(0,10)</td>
+                       <td> 
+                           @Html.ActionLink("Record Sheet","ResultSheet",new { id = item.AssignmentId, courseCode=item.CourseCode }) | 
+                           @Html.ActionLink("View details", "../Reply/Index/", new { id = item.AssignmentId }) 
+
+                       </td>
+                   </tr> 
+                }
+    </table>
+            </div>
+
+            <!-- Content Column -->
+            <div class="col-md-3">
+                <div class="alert alert-warning">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Advertisement </strong>
+                </div>
+               @Html.Action("_AdvertList","Profile")
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="t_and_c_m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel" style="font-weight:bold;text-align:center;color:#0a78c7">Disclaimer</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+                    The information contained in this website is for academic purposes only. 
+                    The information is provided by <strong>Microware Solution</strong> and while we endeavour to 
+                    keep the information up to date and correct, we make no representations or warranties 
+                    of any kind, express or implied, about the completeness, accuracy, reliability, suitability 
+                    or availability with respect to the website or the information, products, services, or related 
+                    graphics contained on the website for any purpose. Any reliance you place on such information is 
+                    therefore strictly at your own risk.
+				</p>
+                <p>
+                    In no event will we be liable for any loss or damage including without limitation, indirect or 
+                    consequential loss or damage, or any loss or damage whatsoever arising from loss of data or profits 
+                    arising out of, or in connection with, the use of this website.
+                </p>
+                <p>
+                    Through this website you are able to link to other websites which are not under the control of <strong>Microware Solution</strong>. 
+                    We have no control over the nature, content and availability of those sites. The inclusion of any links does not necessarily 
+                    imply a recommendation or endorse the views expressed within them.
+                </p>
+                <p>
+                    Every effort is made to keep the website up and running smoothly. However, Microware Solution takes no responsibility for, 
+                    and will not be liable for, the website being temporarily unavailable due to technical issues beyond our control.
+                </p>
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">I Agree</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

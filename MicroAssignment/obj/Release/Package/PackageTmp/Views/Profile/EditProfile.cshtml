@@ -1,0 +1,162 @@
+﻿@model MicroAssignment.Models.UserProfile
+
+@{
+    ViewBag.Title = "EditProfile";
+}
+
+   <!-- Page Heading/Breadcrumbs -->
+<div class="row">
+     <div class="col-lg-8">
+
+          <div class="alert alert-info">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Hello! &nbsp; @Model.FullName </strong>
+                </div>
+
+<h2>EditProfile</h2>
+
+@using (Html.BeginForm("EditProfile", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>UserProfile</legend>
+
+        @Html.HiddenFor(model => model.UserId)
+        @Html.HiddenFor(model => model.UserName)
+        @Html.HiddenFor(model => model.DepartmentId)
+        @Html.HiddenFor(model => model.ImageUrl)
+        @Html.HiddenFor(model => model.RegistrationType)
+        @Html.HiddenFor(model => model.IsComplated)
+
+         @if (User.IsInRole("Student"))
+                {
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RegistrationNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.RegistrationNumber, new { @class = "form-control", @placeholder = "Registration No.",@style="width:300px" })
+                        @Html.ValidationMessageFor(model => model.RegistrationNumber)
+                    </div>
+                }
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SurName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.SurName, new { @class = "form-control", @placeholder = "Surname here...",@style="width:300px" })
+            @Html.ValidationMessageFor(model => model.SurName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @placeholder = "Firstname here...",@style="width:300px"  })
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OtherNames)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.OtherNames, new { @class = "form-control", @placeholder = "Othernames here...",@style="width:300px"  })
+            @Html.ValidationMessageFor(model => model.OtherNames)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmailAddress)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control",@style="width:300px" })
+            @Html.ValidationMessageFor(model => model.EmailAddress)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PhoneNumber)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control",@style="width:300px" })
+            @Html.ValidationMessageFor(model => model.PhoneNumber)
+        </div>
+
+        @if (User.IsInRole("Student"))
+        {
+            <div class="editor-label">
+            @Html.LabelFor(model => model.LevelId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("LevelId", ViewBag.LevelId as SelectList,null, new { id = "LevelId",@class = "form-control",@style="width:300px"})
+            @Html.ValidationMessageFor(model => model.LevelId)
+        </div>
+        }
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ImageUrl,"Change Image")
+        </div>
+        <div class="editor-field">
+            <input type="file" name="fileuploader1" />
+        </div>
+
+        <p style="margin-top:7px">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+</div>
+
+
+     <div class="col-lg-4">
+         <strong style="font-size:1.4em">Account Details</strong>
+         <table class="table table-bordered table-hover table-striped">
+             <tr>
+                 <td>First Name</td>
+                 <td>@Model.FirstName</td>
+             </tr>
+             <tr>
+                 <td> Surname</td>
+                 <td>@Model.SurName</td>
+             </tr>
+             <tr>
+                 <td>Other Names</td>
+                 <td>@Model.OtherNames</td>
+             </tr>
+             
+             
+            @if (User.IsInRole("Student"))
+            {
+                <tr>
+                 <td>Registration No.</td>
+                 <td>@Model.RegistrationNumber</td>
+                </tr>
+                
+                <tr>
+                     <td>Department</td>
+                     <td>@Model.Department.DepartmentName</td>
+                </tr>
+                
+                 <tr>
+                     <td>Level</td>
+                     <td>@Model.Level.LevelName</td>
+                </tr>
+            }
+             <tr>
+                 <td>Email</td>
+                 <td>@Model.EmailAddress</td>
+             </tr>
+             <tr>
+                 <td>Phone No.</td>
+                 <td>@Model.PhoneNumber</td>
+             </tr>
+         </table>
+
+     </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

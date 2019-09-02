@@ -1,0 +1,70 @@
+﻿@model IEnumerable<MicroAssignment.Models.Assignment>
+
+@{
+    ViewBag.Title = "Index";
+    int sn = 1;
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Add New", "Create")
+</p>
+<table class="table table-hover table-bordered table-striped">
+    <tr>
+        <th>
+            S/N
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Topic)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Department.DepartmentName)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Levels.LevelName)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @(sn++)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Topic)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Department.DepartmentName) ( @Html.DisplayFor(modelItem => item.Levels.FullLevel) )
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Levels.LevelName)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AssignmentId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AssignmentId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AssignmentId })
+        </td>
+    </tr>
+}
+
+</table>

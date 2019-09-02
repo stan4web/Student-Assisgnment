@@ -1,0 +1,44 @@
+﻿@model MicroAssignment.Models.Enrollment
+@{
+    ViewBag.Title = "Enrollment";
+}
+
+
+@if (ViewBag.enrollment == null)
+ {
+<h2>Students Enrollment</h2>
+<p style="color:#f00">@TempData["error"]</p>
+    <hr />
+
+     using (Html.BeginForm("Enrollment", "Profile", new { id = ViewBag.deptId }))
+     {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Enrolment</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SessionId, "Session")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("SessionId", ViewBag.SessionId as SelectList, "Select Session", new { id = "", @required = true, @class = "form-control", @style = "width:auto" }) 
+            <span style="color:#f00">@Html.ValidationMessageFor(model => model.SessionId)</span>
+        </div>
+            <br />
+            <input type="submit" value="Create Enrollment" class="btn btn-primary" />
+ </fieldset>
+     }
+}
+else
+ {
+    <h2>Course Registration Process</h2>
+    <hr />
+   <div>
+
+       <strong style="font-size:1.4em">Current Session: @ViewBag.CurrentYear</strong>
+       @using (Html.BeginForm("SaveCourses", "Profile", new { id = ViewBag.enrollmentId, sessId = ViewBag.sessName }))
+            {
+              <p>
+                 <input type="submit" value="Course Registration >>" class="btn btn-primary" />
+              </p>
+             }
+  </div>
+}

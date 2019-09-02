@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "ListReplied";
+}
+
+   <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-9">
+                
+                <div class="alert alert-info">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Submited Assignment with score</strong>
+                </div>
+
+                @Html.Action("_ScoredAssignment")
+
+                </div>
+
+            <div class="col-lg-3">
+               <div class="alert alert-warning">
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <strong><i class="icon-user icon-large"></i>Advertisement </strong>
+                </div>
+               @Html.Action("_AdvertList")
+            </div>
+            </div>

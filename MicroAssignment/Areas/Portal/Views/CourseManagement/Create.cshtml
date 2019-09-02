@@ -1,0 +1,67 @@
+﻿@model MicroAssignment.Models.Course
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Course</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CourseName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CourseName, new { @class = "form-control",@style="width:300px",@placeholder="CourseName" })
+            @Html.ValidationMessageFor(model => model.CourseName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DepartmentID, "Department")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("DepartmentID", ViewBag.DepartmentID as SelectList, "Select Department", new { id="", @required=true, @class = "form-control",@style="width:auto"}) 
+            @Html.ValidationMessageFor(model => model.DepartmentID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreditUnit)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CreditUnit, new { @class = "form-control",@style="width:300px",@placeholder="CreditUnit" })
+            @Html.ValidationMessageFor(model => model.CreditUnit)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CourseCode)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CourseCode, new { @class = "form-control",@style="width:300px",@placeholder="CourseCode" })
+            @Html.ValidationMessageFor(model => model.CourseCode)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SessionId, "Session")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("SessionId", ViewBag.SessionId as SelectList, "Select Session", new { id="", @required=true, @class = "form-control",@style="width:auto"}) 
+            @Html.ValidationMessageFor(model => model.SessionId)
+        </div>
+
+        <p>
+            <input type="submit" value="Add" class="btn btn-success" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

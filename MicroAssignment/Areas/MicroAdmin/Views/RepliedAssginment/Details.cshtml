@@ -1,0 +1,71 @@
+﻿@model MicroAssignment.Models.ReplyAssignment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>ReplyAssignment</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Assignment.CourseName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Assignment.CourseName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Content)
+    </div>
+    <div class="display-field">
+        @Html.Raw(Model.Content)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Department.DepartmentName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Department.DepartmentName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Levels.LevelName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Levels.LevelName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserProfile.UserName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserProfile.UserName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Date)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Date)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.StudentId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StudentId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Score)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Score)
+    </div>
+</fieldset>
+<p>
+   
+    @Html.ActionLink("Back to List", "Index")
+</p>

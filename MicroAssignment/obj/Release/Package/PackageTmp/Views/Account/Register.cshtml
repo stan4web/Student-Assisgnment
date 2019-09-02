@@ -1,0 +1,207 @@
+﻿@model MicroAssignment.Models.RegisterModel
+@using CaptchaMvc.HtmlHelpers
+@{
+    ViewBag.Title = "Account";
+    var captcha = Html.Captcha("Refresh", "Type the text you see above:", 5, "Is required field.", false);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!-- Start WOWSlider.com HEAD section --> <!-- add to the <head> of your page -->
+	<link rel="stylesheet" type="text/css" href="~/Content/Slider/engine1/style.css" />
+
+<p style="text-align:right">@Html.ActionLink("Forget Password","ResetPassword","Account")</p>
+   <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h5 class="page-header"><strong>ASSIGNMENT-NG</strong> for University, Polytechnic, College, and High Schools. 
+                    <small></small>
+                </h5>
+                <ol class="breadcrumb">
+                    <li>
+                        <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#MyModal">DISCLAIMER</button>
+                    </li>
+                    <li><a href="#">Manual</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+
+<p style="color:#25cf3b;">@TempData["Report"]</p>
+        <!-- Content Row -->
+        <div class="row" style="margin-top:10px">
+         <div class="col-md-6">
+             <div>
+                 <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+	                <div id="wowslider-container1">
+	                <div class="ws_images"><ul>
+                        <li><img src="~/Content/Slider/data1/images/one.jpg" alt="one" title="" id="wows1_0"/></li>
+                        <li><a href="#"><img src="~/Content/Slider/data1/images/two.jpg" alt="full screen slider" title="" id="wows1_1"/></a></li>
+                        <li><img src="~/Content/Slider/data1/images/four.jpg" alt="four" title="" id="wows1_2"/></li>
+                        </ul>
+
+	                </div>
+                       
+	                </div>	
+	                <script type="text/javascript" src="~/Content/Slider/engine1/wowslider.js"></script>
+	                <script type="text/javascript" src="~/Content/Slider/engine1/script.js"></script>
+	                <!-- End WOWSlider.com BODY section -->
+                 
+             </div>
+             <p style="font-weight:bold;font-size:2.6em;color:#727070;font-family:'Times New Roman';font-style:italic">
+                 <img src="~/Images/FrontPix/users.jpg" style="width:50px" />
+              @ViewBag.Count   <span style="font-size:18px">  Users</span>
+             </p>
+         </div>
+
+            <div class="col-md-6">
+                <div>
+                    
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <span style="color:#f00">@Html.ValidationSummary()</span>
+
+                        <div style="width:100%;border:solid 1px #e3eded;padding:10px 40px 40px 40px;float:right">
+                          <h4 style="color:#2877b0;font-family:'Arrus Blk BT'">New Account <span style="font-size:small;color:#808080;float:right">For Students</span></h4>
+                            
+                            <div>
+                                <div>
+                                    @Html.LabelFor(m => m.UserName)
+                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control",@placeholder="Required"})
+                                </div>
+                                <div>
+                                    @Html.LabelFor(m => m.Password)
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control",@placeholder="Required"})
+                                </div>
+                                <div>
+                                    @Html.LabelFor(m => m.ConfirmPassword)
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control",@placeholder="Required"})
+                                </div>
+                                <hr />
+
+                                <div>
+                                    @Html.LabelFor(m => m.SurName)
+                                    @Html.TextBoxFor(m => m.SurName, new { @class = "form-control",@placeholder="Required"})
+                                </div>
+
+                                <div>
+                                    @Html.LabelFor(m => m.FirstName)
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control",@placeholder="Required"})
+                                </div>
+
+                                <div>
+                                    @Html.LabelFor(m => m.OtherNames)
+                                    @Html.TextBoxFor(m => m.OtherNames, new { @class = "form-control",@placeholder="Required"})
+                                </div>
+
+                                <div>
+                                       @Html.LabelFor(m => m.EmailAddress)
+                                       @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", @placeholder = "Required" })
+                                </div>
+
+                                <div>
+                                        @Html.LabelFor(m => m.PhoneNumber)
+                                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @placeholder = "Required" })
+                                </div>
+                                <div>
+                                        @Html.LabelFor(m => m.School.SchoolName)
+                                        @Html.DropDownList("SchoolId", ViewBag.SchoolId as SelectList, "Select", new { id="Schooldata", @required=true, @class = "form-control"}) 
+                                </div>
+
+                                <div>
+                                    @Html.LabelFor(m => m.Department.DepartmentName)
+                                    <select id="Department" name="DepartmentId" class = "form-control" required="required"  style="width:auto"></select>
+                                </div>
+
+                                <div>
+                                        @Html.LabelFor(m => m.Level.LevelName)
+                                        @Html.DropDownList("LevelId", ViewBag.LevelId as SelectList, "Select Level", new { id="", @required=true, @class = "form-control",@style="width:auto"}) 
+                                </div>
+
+                                <div>
+                                       @Html.LabelFor(m => m.RegistrationNumber)
+                                       @Html.TextBoxFor(m => m.RegistrationNumber, new { @class = "form-control", @placeholder = "Required" })
+                                </div>
+
+                                <div style="margin-top:3px">
+                                    <label>Upload your passport</label>
+                                    <input type="file" name="fileuploader1" />
+                                </div>
+                                <div>
+                                        <span style="color:#f00;margin:10px">Prove that you are not a robot by typing this code</span>
+                                        @captcha
+                                        <span style="color:#f00"> @Html.ValidationMessage(captcha.BuildInfo.InputElementId)</span>
+                                </div>                              
+                             
+                            </div>
+                          
+                            
+                            <hr />
+                            <input type="submit" value="Register" class="btn btn-primary" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+
+@section Scripts {
+<script type="text/jscript">
+    $(function () {
+        $('#Schooldata').change(function () {
+            $.getJSON('/Assignment/DeptList/' + $('#Schooldata').val(), function (data) {
+                var items = '<option>Select Department</option>';
+                $.each(data, function (i, local) {
+                    items += "<option value='" + local.Value + "'>" + local.Text + "</option>";
+                });
+                $('#Department').html(items);
+            });
+        });
+    });
+</script>
+ @Scripts.Render("~/bundles/jqueryval") 
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="MyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel" style="font-weight:bold;text-align:center;color:#0a78c7">DISCLAIMER</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+                    The information contained in this website is for academic purposes only. 
+                    The information is provided by <strong>Microware Solution</strong> and while we endeavour to 
+                    keep the information up to date and correct, we make no representations or warranties 
+                    of any kind, express or implied, about the completeness, accuracy, reliability, suitability 
+                    or availability with respect to the website or the information, products, services, or related 
+                    graphics contained on the website for any purpose. Any reliance you place on such information is 
+                    therefore strictly at your own risk.
+				</p>
+                <p>
+                    In no event will we be liable for any loss or damage including without limitation, indirect or 
+                    consequential loss or damage, or any loss or damage whatsoever arising from loss of data or profits 
+                    arising out of, or in connection with, the use of this website.
+                </p>
+                <p>
+                    Through this website you are able to link to other websites which are not under the control of <strong>Microware Solution</strong>. 
+                    We have no control over the nature, content and availability of those sites. The inclusion of any links does not necessarily 
+                    imply a recommendation or endorse the views expressed within them.
+                </p>
+                <p>
+                    Every effort is made to keep the website up and running smoothly. However, Microware Solution takes no responsibility for, 
+                    and will not be liable for, the website being temporarily unavailable due to technical issues beyond our control.
+                </p>
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">I Agree</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,0 +1,25 @@
+﻿
+@{int sn = 1;}
+
+<table class="xyz-table1">
+    <tr>
+        <th>S/N</th>
+        <th>Coursr Name</th>
+        <th>Code</th>
+        <th>Unit</th>
+        
+    </tr>
+    @foreach (var item in ViewBag.carryover)
+    {
+        <tr>
+            <td>@(sn++)</td>
+            <td>@item.CourseName</td>
+            <td>@item.CourseCode</td>
+            <td>@item.CreditUnit</td>
+            
+        </tr>
+    }
+</table>
+<hr />
+<h3>Total Carry Over Unit: @ViewBag.TotalUnit</h3>
+<br />

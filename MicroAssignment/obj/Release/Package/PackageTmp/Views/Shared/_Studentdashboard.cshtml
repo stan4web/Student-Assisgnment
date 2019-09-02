@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - Dashboard</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        
+        <link href="~/Content/StudentAdmin/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/Content/StudentAdmin/css/custom.css" rel="stylesheet" />
+        <link href="~/Content/StudentAdmin/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap/css/datepicker.css" rel="stylesheet" />
+
+       @RenderSection("style",required:false)
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        
+        <div id="wrapper">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Micro Assignment</a> 
+            </div>
+  <div style="color: white;
+padding: 15px 50px 5px 50px;
+float: right;
+font-size: 16px;">
+       @using (Html.BeginForm("LogOff", "Account",new{area = ""}, FormMethod.Post, new { id = "logoutForm" })) {
+            @Html.AntiForgeryToken()
+           var db=new MicroAssignment.Models.MicroContext();
+           var userDetails =db.UserProfiles.FirstOrDefault(x=>x.UserName==User.Identity.Name);
+           ViewBag.ImageUrl=userDetails.ImageUrl;
+           ViewBag.UserId=userDetails.UserId;
+           ViewBag.FullName=userDetails.SurName.Substring(0,1).ToUpper()+userDetails.SurName.Substring(1).ToLower()+" "+userDetails.FirstName.Substring(0,1).ToUpper()+userDetails.FirstName.Substring(1).ToLower();
+           ViewBag.Email=userDetails.EmailAddress;
+           ViewBag.Phone=userDetails.PhoneNumber;  
+        
+           
+           var dept=db.Departments.FirstOrDefault(x=>x.DepartmentId==userDetails.DepartmentId);
+           ViewBag.Dept = dept.DepartmentName;
+          @: Current User: @WebSecurity.CurrentUserName <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-info square-btn-adjust">Log off</a>
+                          
+        }
+  </div>
+        </nav>   
+           <!-- /. NAV TOP  -->
+                <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+				<li class="text-center">
+
+                    @if(ViewBag.ImageUrl !=null){
+                    <img src="~/Uploads/Items/@(System.IO.Path.GetFileName(ViewBag.ImageUrl))" class="user-image img-responsive" style="" />
+                        <a href=@Url.Content("~/Profile/EditProfile/")@ViewBag.UserId>Edit profile</a>
+                    }else{
+                        <img src="~/COntent/admin/img/find_user.png" class="user-image img-responsive"/>
+                        <a href=@Url.Content("~/Profile/EditProfile/")@ViewBag.UserId>Edit profile</a>
+                    }
+					</li>
+				
+					@if (User.IsInRole("Student"))
+                     {
+                        <li>
+                        <a class="@ViewBag.Profile"  href="@Url.Content("~/Profile/Index/")"><i class="fa fa-user fa-2x"></i> @ViewBag.FullName </a>
+                    </li>
+                    <li>
+                        <a class="@ViewBag.Assignment"  href="@Url.Content("~/Profile/ListAssignment/")"><i class="fa fa-save fa-2x"></i> Assignment</a>
+                    </li>
+                     	
+                    <li>
+                        <a class="@ViewBag.Replies"  href="@Url.Content("~/Profile/ListReplied/")"><i class="fa fa-edit fa-2x"></i>Submitted Assignment</a>
+                    </li>
+
+                     <li  >
+                        <a  class="@ViewBag.Project" href="@Url.Content("~/Project/")"><i class="fa fa-download fa-2x"></i>Project Guide</a>
+
+                    </li>	
+
+                    <li  >
+                        <a  class="@ViewBag.Forum" href="@Url.Content("~/Profile/Forum/")"><i class="fa fa-sitemap fa-2x"></i>General Forum</a>
+
+                    </li>
+                     }
+                     else
+                     {
+                         <li><a class="@ViewBag.Profile"  href="@Url.Content("~/Profile/Index/")"><i class="fa fa-user fa-2x"></i> @ViewBag.FullName </a></li>
+                         <li><a ><i class="fa fa-lock fa-2x"></i> NAME: @ViewBag.FullName</a></li>
+                         <li><a ><i class="fa fa-lock fa-2x"></i> EMAIL: @ViewBag.Email</a></li>
+                         <li><a ><i class="fa fa-lock fa-2x"></i> PHONE #: @ViewBag.Phone</a></li>
+                         <li><a ><i class="fa fa-lock fa-2x"></i> DEPARTMENT #: @ViewBag.Dept</a></li>
+                         <li><a  class="@ViewBag.Forum" href="@Url.Content("~/Profile/Forum/")"><i class="fa fa-sitemap fa-2x"></i>General Forum</a></li>
+                    }
+                </ul>
+               
+            </div>
+            
+        </nav>  
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+            <div id="page-inner">
+                @RenderBody()
+    </div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+        
+        <script src="~/Content/StudentAdmin/js/jquery-1.10.2.js"></script>
+      <!-- BOOTSTRAP SCRIPTS -->
+    <script src="~/Content/StudentAdmin/js/bootstrap.min.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="~/Content/StudentAdmin/js/jquery.metisMenu.js"></script>
+     <!-- MORRIS CHART SCRIPTS -->
+     <script src="~/Content/StudentAdmin/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="~/Content/StudentAdmin/js/morris/morris.js"></script>
+
+        @RenderSection("scripts",required:false)
+      <!-- CUSTOM SCRIPTS -->
+    <script src="~/Content/StudentAdmin/js/custom.js"></script>
+
+         <!-- jQuery Version 1.11.0 -->
+        <script src="~/Content/bootstrap/js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+        <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+
+        <script src="~/Content/bootstrap/js/bootstrap-datepicker.js"></script>
+
+
+        <script>
+            if (top.location != location) {
+                top.location.href = document.location.href;
+            }
+            $(function () {
+                window.prettyPrint && prettyPrint();
+                $('#dp1').datepicker({
+                    format: 'mm-dd-yyyy'
+                });
+                $('#dp2').datepicker();
+                $('#dp3').datepicker();
+                $('#dp3').datepicker();
+                $('#dpYears').datepicker();
+                $('#dpMonths').datepicker();
+
+
+                var startDate = new Date(2012, 1, 20);
+                var endDate = new Date(2012, 1, 25);
+                $('#dp4').datepicker()
+                    .on('changeDate', function (ev) {
+                        if (ev.date.valueOf() > endDate.valueOf()) {
+                            $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+                        } else {
+                            $('#alert').hide();
+                            startDate = new Date(ev.date);
+                            $('#startDate').text($('#dp4').data('date'));
+                        }
+                        $('#dp4').datepicker('hide');
+                    });
+                $('#dp5').datepicker()
+                    .on('changeDate', function (ev) {
+                        if (ev.date.valueOf() < startDate.valueOf()) {
+                            $('#alert').show().find('strong').text('The end date can not be less then the start date');
+                        } else {
+                            $('#alert').hide();
+                            endDate = new Date(ev.date);
+                            $('#endDate').text($('#dp5').data('date'));
+                        }
+                        $('#dp5').datepicker('hide');
+                    });
+
+                // disabling dates
+                var nowTemp = new Date();
+                var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+                var checkin = $('#dpd1').datepicker({
+                    onRender: function (date) {
+                        return date.valueOf() < now.valueOf() ? 'disabled' : '';
+                    }
+                }).on('changeDate', function (ev) {
+                    if (ev.date.valueOf() > checkout.date.valueOf()) {
+                        var newDate = new Date(ev.date)
+                        newDate.setDate(newDate.getDate() + 1);
+                        checkout.setValue(newDate);
+                    }
+                    checkin.hide();
+                    $('#dpd2')[0].focus();
+                }).data('datepicker');
+                var checkout = $('#dpd2').datepicker({
+                    onRender: function (date) {
+                        return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+                    }
+                }).on('changeDate', function (ev) {
+                    checkout.hide();
+                }).data('datepicker');
+            });
+	</script>
+    </body>
+</html>

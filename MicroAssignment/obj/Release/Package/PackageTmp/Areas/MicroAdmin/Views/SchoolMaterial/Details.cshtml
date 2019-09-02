@@ -1,0 +1,64 @@
+﻿@model MicroAssignment.Models.Material
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Material</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CategoryName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CategoryName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DepartmentId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DepartmentId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Topic)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Topic)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.Raw(Model.Description)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DocumentUrl)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DocumentUrl)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DateUploaded)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateUploaded)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserProfile.UserName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserProfile.UserName)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.MaterialId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

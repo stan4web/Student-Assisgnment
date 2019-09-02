@@ -1,0 +1,81 @@
+﻿@model MicroAssignment.Models.Advertise
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Advertise</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CompanyName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CompanyName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CompanyEmail)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CompanyEmail)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CompanyWebsite)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CompanyWebsite)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Visitor)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Visitor)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CompanyPhoneNo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CompanyPhoneNo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ImageUrl)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ImageUrl)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.StartDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StartDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.StopDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StopDate)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

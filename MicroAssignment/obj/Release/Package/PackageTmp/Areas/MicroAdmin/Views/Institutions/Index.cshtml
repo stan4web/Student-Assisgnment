@@ -1,0 +1,94 @@
+﻿@model PagedList.IPagedList<MicroAssignment.Models.School>
+
+@{
+    ViewBag.Title = "Index";
+    int sn = 1;
+}
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><i class="icon-user icon-large"></i>&nbsp;  Settings - School </strong>
+    </div> 
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div style="margin-bottom:7px">
+    @using (Html.BeginForm())
+    {
+        <div style="margin-bottom:5px">
+            Search Log: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {@class="search-query", @placeholder="Search"}) 
+            <input class = "btn" type="submit" value="Search" />
+        </div>
+        <strong>Search student by: SchoolName and SchoolCode</strong>
+    }
+</div> 
+<hr />
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th>
+            S/N
+        </th>
+        <th>
+            School Name
+        </th>
+        <th>
+            Code
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @(sn++)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SchoolName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SchoolCode)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SchoolId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SchoolId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SchoolId })
+        </td>
+    </tr>
+}
+
+</table>
+
+<p style="text-align:right; margin-top:10px">
+        <ul class="pager">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of   @Model.PageCount
+     
+    @if (Model.HasPreviousPage)
+    {
+        <li>@Ajax.ActionLink("<<  First", "Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+        @Html.Raw(" ");
+        <li>@Ajax.ActionLink("< Prev", "Index", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+    }
+    else
+    {
+       
+        @Html.Raw(" ");
+        @: <li><span><< Prev</span> </li>
+    }
+      
+    @if (Model.HasNextPage)
+    {
+        
+       <li> @Ajax.ActionLink("Next >", "Index", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+         @Html.Raw(" ");
+       <li> @Ajax.ActionLink("Last >>", "Index", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+    }
+    else
+    {
+        @:<li><span>Next >></span> </li>
+        @Html.Raw(" ")
+       
+    }
+            </ul>
+</p>

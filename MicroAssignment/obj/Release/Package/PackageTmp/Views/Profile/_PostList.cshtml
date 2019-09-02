@@ -1,0 +1,48 @@
+﻿@{
+    var db = new MicroAssignment.Models.MicroContext();
+    var commentDb = db.Comments;
+    
+}
+<div>
+    @foreach (var item in ViewBag.Post)
+    {
+        int id = item.PostId;
+     
+        var comment = commentDb.Where(p => p.PostId == id);
+        
+       <div class="media">
+          <a class="pull-left" href="#">
+            <img class="img-circle" data-src="holder.js/64x64" alt="" src="~/Uploads/Items/@System.IO.Path.GetFileName(item.UserProfile.ImageUrl)" style="width:44px;height:44px;border:solid 1px #808080;padding:3px;display:block" />
+          </a>
+            <div class="media-body">
+                <h4 class="media-heading">@ViewBag.Name  | 
+                  <small>@item.PostDate</small>
+                  </h4>
+                        @item.ShortPost
+            </div>
+           <hr />
+                        <!--Comment List-->
+                        <div id="comment" style="text-align:left">
+                            @foreach (var comm in comment.OrderByDescending(x=>x.CommentId))
+                            {
+                                var userDetails = db.UserProfiles.FirstOrDefault(x => x.UserId == comm.UserId); 
+                                <div class="media">
+                                  <a class="pull-left" href="#">
+                                      @if(userDetails.ImageUrl!=null){
+                                    <img class="img-circle" data-src="holder.js/64x64" alt="" src="~/Uploads/Items/@System.IO.Path.GetFileName(userDetails.ImageUrl)" style="width:30px;height:30px;border:solid 1px #808080;padding:3px;display:block;margin-left:30px" />
+                                      }else{
+                                           <img class="img-circle" data-src="holder.js/64x64" alt="" src="~/Images/no-avatar.jpg" style="width:30px;height:30px;border:solid 1px #808080;padding:3px;display:block;margin-left:30px" />
+                                      }
+                                           </a>
+                                    <div class="media-body" style="text-align:justify">
+                                        <h6 style="color:#811616" class="media-heading">@userDetails.FullName Say:</h6>
+                                                @comm.Content<br />
+                                        <small>@comm.CommentDate</small>
+                                    </div>
+                              </div>
+                                <hr />
+                            }
+                          </div>
+      </div>
+    }
+</div>

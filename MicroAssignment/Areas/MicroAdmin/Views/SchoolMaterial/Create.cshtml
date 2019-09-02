@@ -1,0 +1,90 @@
+﻿@model MicroAssignment.Models.Material
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><i class="icon-user icon-large"></i>&nbsp; Create New Material</strong>
+    </div> 
+
+@using (Html.BeginForm("Create", "SchoolMaterial", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Material</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CategoryName)
+        </div>
+        <div class="editor-field">
+            <select name="CategoryName" class="form-control" style="width:40%">
+                <option>Select</option>
+                <option>Project</option>
+                <option>Seminar</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.CategoryName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DepartmentId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("DepartmentId", ViewBag.DepartmentId as SelectList, null, new { id = "Department", @required=true, @class = "form-control",@style="margin-top:7px;width:40%"})
+            @Html.ValidationMessageFor(model => model.DepartmentId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Topic)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Topic, new { @class = "form-control", @style="width:40%" })
+            @Html.ValidationMessageFor(model => model.Topic)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(c => c.Description, new { @id = "summernote" })
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DocumentUrl,"Upload File")
+        </div>
+        <div class="editor-field">
+            <input type="file" id="fileToUpload" name="file" />
+            @Html.ValidationMessageFor(model => model.DocumentUrl)
+        </div>
+
+       
+
+        <p style="margin-top:7px">
+            <input type="submit" value="Upload" class="btn btn-primary"/>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/summernote/summernote.css" rel="stylesheet" />
+
+    <script src="~/Content/summernote/summernote.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                height: 400,
+            });
+        });
+    </script>
+}
+

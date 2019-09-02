@@ -1,0 +1,42 @@
+﻿@model MicroAssignment.Models.CarryOver
+
+@{
+    ViewBag.Title = "AddCarryOver";
+}
+
+<h2>AddCarry Over Courses</h2>
+@using (Html.BeginForm("AddCarryOver","Profile")) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>CarryOver</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Course.CourseName)
+        </div>
+        <div class="editor-field">
+            @Html.ValidationMessageFor(model => model.Course.CourseName)
+            @Html.DropDownList("CourseID", ViewBag.CourseID as SelectList, "Select Course", new { id="", @required=true, @class = "form-control",@style="width:auto;float:left;margin-right:3px"}) 
+            
+            <input type="submit" value="Add >>"  class="btn btn-default"/>
+        </div>
+       
+
+        <p style="margin:7px">
+            
+        </p>
+    </fieldset>
+}
+
+<div style="width:80%;float:left">
+    @Html.Action("_CarryOverList")
+</div>
+<div style="height:30px;width:100%"></div>
+<br /><br />
+<p style="clear:both;width:100%;margin:10px">
+    @Html.ActionLink("Finish", "../Profile/CourseRegistration", new { id = ViewBag.errolmentId}, new { @class="btn btn-primary"})
+</p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

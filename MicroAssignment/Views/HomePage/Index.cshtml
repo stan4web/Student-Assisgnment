@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+
+    <!-- Header -->
+    <a name="about"></a>
+    <div class="intro-header">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>Micro Assignment</h1>
+                        <h3>Your ICT Solution</h3>
+                        <hr class="intro-divider">
+                        <small>User Account</small><br /><br />
+                        <ul class="list-inline intro-social-buttons">
+                            <li>
+                                <a href="~/Account/Instructor" class="btn btn-default btn-lg"><i class="fa fa-lock fa-fw"></i> <span class="network-name">Lecturer</span></a>
+                            </li>
+                            <li>
+                                <a href="~/Account/Register" class="btn btn-default btn-lg"><i class="fa fa-lock fa-fw"></i> <span class="network-name">Student</span></a>
+                            </li>
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.intro-header -->
+
+    <!-- Page Content -->
+
+	<a  name="services"></a>
+    <div class="content-section-a">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">I.T On Your Finger Tips <br></h2>
+                    <p class="lead">We need students to construct their digital environment, rather than just being consulted about it</p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <img class="img-responsive" src="~/Images/tutorial.jpg" style="border:solid 13px #211f1f; -webkit-border-radius:10px; -moz-border-radius:10px;border-radius:10px" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div class="content-section-b">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Using ICT to move <br>education to the next level</h2>
+                    <p class="lead">Students need a flexible environment that lets them experiment, learn from each other, and create their own blend</p>
+                </div>
+                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                    <img class="img-responsive" src="~/Images/you.jpg" style="border:solid 13px #211f1f; -webkit-border-radius:10px; -moz-border-radius:10px;border-radius:10px" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-b -->
+
+    <div class="content-section-a">
+
+        <div class="container">
+
+            <div class="row">
+                <h3 style="color:#b50707">Download Your Seminar/Project Materials <span style="color:#0bca24">Now!</span></h3>
+
+                @Html.Action("_Downloads")
+       </div>
+</div>
+  </div>
+          
+
+    <!-- /.content-section-a -->
+
+	<a  name="contact"></a>
+    
+    <!-- /.banner -->
+
+
+

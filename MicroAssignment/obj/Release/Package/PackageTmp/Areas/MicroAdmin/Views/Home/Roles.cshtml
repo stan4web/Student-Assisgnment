@@ -1,0 +1,39 @@
+@model String[]
+@{
+    
+    ViewBag.Title = "Roles";
+    
+}
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><i class="icon-user icon-large"></i>&nbsp;  Role Management </strong>
+    </div>  
+<h4>Role Provider</h4>
+<ul>
+    @foreach (var role in Model)
+    {
+        <li>@role</li>
+    }
+</ul>
+
+
+
+@using (Html.BeginForm("AddRole", "Home"))
+{ 
+    
+    
+    <div>
+        
+        <label>Add Role</label>
+        <input type="text" name="rolename" />
+        <input type="submit" value="Add"  class="btn btn-success" />
+    </div>
+
+}
+<p>
+        <a href="~/MicroAdmin/Home/Users" class="btn btn-primary">Users</a>
+    </p>
+
+<p>
+   <a href="~/MicroAdmin/Home/Index" class="btn btn-inverse">Back to admin panel</a>
+</p>

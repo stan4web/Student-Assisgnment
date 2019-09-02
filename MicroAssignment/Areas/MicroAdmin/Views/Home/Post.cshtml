@@ -1,0 +1,99 @@
+﻿@model PagedList.IPagedList<MicroAssignment.Models.Post>
+
+@{
+    ViewBag.Title = "Post";
+    int sn = 1;
+    var db = new MicroAssignment.Models.MicroContext();
+}
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><i class="icon-user icon-large"></i>&nbsp;  Content Management - Post</strong>
+    </div> 
+ 
+<div style="margin-bottom:7px">
+    @using (Html.BeginForm())
+    {
+        <div style="margin-bottom:5px">
+            Search Log: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {@class="search-query", @placeholder="Search"}) 
+            <input class = "btn" type="submit" value="Search" />
+        </div>
+        <strong>Search student by: Post content</strong>
+    }
+</div> 
+<hr />
+<table class="table table-bordered table-striped table-hover table-condensed">
+    <tr>
+        <th>
+            S/N
+        </th>
+        <th>
+            UserId
+        </th>
+        <th>
+            PostContent
+        </th>
+        <th>
+            PostDate
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    var userdetails = db.UserProfiles.FirstOrDefault(x=>x.UserId==item.UserId);
+    <tr>
+        <td>
+            @(sn++)
+        </td>
+        <td>
+            @userdetails.UserName
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostDate)
+        </td>
+        <td>
+            
+            @Html.ActionLink("Delete", "DeletePost", new { id=item.PostId })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+<p style="text-align:right; margin-top:10px">
+        <ul class="pager">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of   @Model.PageCount
+     
+    @if (Model.HasPreviousPage)
+    {
+        <li>@Ajax.ActionLink("<<  First", "Post", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+        @Html.Raw(" ");
+        <li>@Ajax.ActionLink("< Prev", "Post", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+    }
+    else
+    {
+       
+        @Html.Raw(" ");
+        @: <li><span><< Prev</span> </li>
+    }
+      
+    @if (Model.HasNextPage)
+    {
+        
+       <li> @Ajax.ActionLink("Next >", "Post", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+         @Html.Raw(" ");
+       <li> @Ajax.ActionLink("Last >>", "Post", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "main" }, new {@class = "small button" })</li>
+    }
+    else
+    {
+        @:<li><span>Next >></span> </li>
+        @Html.Raw(" ")
+       
+    }
+            </ul>
+</p>

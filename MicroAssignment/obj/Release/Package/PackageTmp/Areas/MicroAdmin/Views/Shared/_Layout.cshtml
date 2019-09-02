@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - School Admin Dashboard</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @*<link href="@Styles.Url("~/content/admin")" rel="stylesheet" />
+        @Styles.Render("~/Content/admin")*@
+        <link href="~/Content/admin/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/Content/admin/css/custom.css" rel="stylesheet" />
+        <link href="~/Content/admin/css/font-awesome.css" rel="stylesheet" />
+       @RenderSection("style",required:false)
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        
+        <div id="wrapper">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                <a class="navbar-brand" href="index.html">CEM Admin</a> 
+                }
+            </div>
+@if (User.IsInRole("SuperAdmin"))
+{
+
+    <div style="color: white;
+padding: 15px 50px 5px 50px;
+float: right;
+font-size: 16px;"> 
+       @using (Html.BeginForm("LogOff", "Account",new{area = ""}, FormMethod.Post, new { id = "logoutForm" })) {
+            @Html.AntiForgeryToken()
+
+                        
+          @: Current User: @WebSecurity.CurrentUserName <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-danger square-btn-adjust">Log off</a>
+                          
+        }
+  </div>
+    
+}
+        </nav> 
+@if (User.IsInRole("SuperAdmin"))
+{  
+           <!-- /. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+				<li class="text-center">
+                    <img src="~/COntent/admin/img/find_user.png" class="user-image img-responsive"/>
+					</li>
+				
+					
+                    <li>
+                        <a class="@ViewBag.Main"  href="@Url.Content("~/MicrowareAdmin/Main/")"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
+                    </li>
+                     	
+                    	
+                     <li  >
+                        <a  class="@ViewBag.UserManager" href="@Url.Content("~/MicrowareAdmin/Main/Users/")"><i class="fa fa-user fa-3x"></i> User Manager</a>
+
+                    </li>	
+                    
+                    <li>
+                        <a class="@ViewBag.Post" href="#"><i class="fa fa-pencil fa-3x"></i> Posts<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="@Url.Content("~/MicrowareAdmin/Forum/")">View Articles/Forum</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicrowareAdmin/ChurchCategory")">View Categories</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicrowareAdmin/Forum/Create")">Create Post</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicrowareAdmin/ChurchCategory/Create")"> Create Category</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicrowareAdmin/Testimony/Index")"> View All Testimonies</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicrowareAdmin/Testimony/Create")"> Create Testimony</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicrowareAdmin/SundaySchool/Create")"> Upload Manual</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/MicrowareAdmin/SundaySchool/Index")"> View Manual</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/PrayerRequest/Index")"> View Prayer Request</a>
+                            </li>
+                        </ul>
+                      </li> 
+                    <li>
+                        <a class="@ViewBag.Main" href="#"><i class="fa fa-cog fa-3x"></i> Settings<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="@Url.Content("~/MicrowareAdmin/Setting/Index")">Logo/Slider Image Upload</a>
+                            </li>
+                            @*<li>
+                                <a href="@Url.Content("~/AdminPanel/main/Appearance")">Appearance/Theme Upload</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/AdminPanel/frontpage/")">Front Page</a>
+                            </li>*@
+                            
+                        </ul>
+                      </li> 		
+					
+					                   
+                    	
+                </ul>
+               
+            </div>
+            
+        </nav>  
+        
+}
+            <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+            <div id="page-inner">
+                @RenderBody()
+    </div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+            <strong><a class="dev" href="http://www.microwaresolutionng.com" title="Visit our website now" target="_blank">POWERED BY: MICROWARE SOLUTION</a>  </strong>
+        </div>
+  <style>
+      .dev{
+          color:#fff;
+      }
+          .dev a {
+             color:#fff;
+          }
+  </style>
+     <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+        
+        <script src="~/Content/admin/js/jquery-1.10.2.js"></script>
+      <!-- BOOTSTRAP SCRIPTS -->
+    <script src="~/Content/admin/js/bootstrap.min.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="~/Content/admin/js/jquery.metisMenu.js"></script>
+     <!-- MORRIS CHART SCRIPTS -->
+     <script src="~/Content/admin/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="~/Content/admin/js/morris/morris.js"></script>
+
+        @RenderSection("scripts",required:false)
+      <!-- CUSTOM SCRIPTS -->
+    <script src="~/Content/admin/js/custom.js"></script>
+    </body>
+</html>

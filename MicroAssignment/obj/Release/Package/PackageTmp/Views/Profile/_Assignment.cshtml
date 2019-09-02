@@ -1,0 +1,30 @@
+﻿<div>
+    @{
+        int sn = 1;
+    }
+    <table class="table table-hover table-bordered table-striped table-condensed"  style="font-size:x-small;font-weight:bold">
+        <tr>
+            <th>S/N</th>
+            <th>Date</th>
+            <th>Lecturer Name</th>
+            <th>Code</th>
+            <th>Exp Date</th>
+            <th>Topic</th>
+            
+        </tr>
+   @foreach (var item in ViewBag.Assignment)
+    {
+       <tr>
+           <td>
+               @(sn++)
+           </td>
+           <td>@item.Date</td>
+           <td>@item.UserProfile.SurName</td>
+           <td>@item.CourseCode</td>
+           <td>@item.ClosingDate</td>
+           <td > <a title="@item.Date" href="@Url.Content("~/Profile/AssignmentDetails/")@item.AssignmentId">View</a></td>
+          
+       </tr> 
+    }
+    </table>
+</div>
